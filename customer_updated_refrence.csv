@@ -1,0 +1,11 @@
+customer_id,first_name,last_name,region,state,cbgid,marital_status,education_level,age,gender
+6822c044-de83-346d-f4a6-375b1dd71b56,Kendra,Thomas,East South Central,Alabama,10872319002,single,primary,39,M
+35610499-4986-85f7-b158-5edd3b0ad4b5,Haley,Shields,East South Central,Mississippi,280890304002,single,primary,49,F
+6822c044-de83-346d-f4a6-375b1dd71b56,Cassandra,Carpenter,Pacific,Washington,530330303104,single,primary,43,M
+c56f692c-7e2e-8866-f747-c89eca66e619,Shaun,Harrison,South Atlantic,Florida,120730007002,single,primary,36,F
+7c56789d-51d1-1ae5-ca51-927be78f85aa,Louis,Walker,Mid-Atlantic,New York,360810863002,single,primary,26,F
+21592602-fb62-509c-e29a-aa3ef25bdbac,Michele,Logan,South Atlantic,Georgia,130470306001,single,primary,29,M
+21a35709-ae02-a9f4-8006-aff375dca0bb,Cindy,Young,Mountain,Colorado,80690010044,single,primary,59,F
+c16466f1-0bc8-523a-256a-cf61f8563a9c,Angela,Garcia,West South Central,Texas,483030004044,married,primary,59,F
+eb68d9ad-8384-0713-1214-1a9ddaafb0e7,Joseph,Barajas,East North Central,Illinois,170318271003,single,primary,62,M
+6da57802-6ae1-c6b9-a0af-5c0e4b5bf761,Cody,Carter,South Atlantic,Florida,121170208054,single,bachelor,60,M
