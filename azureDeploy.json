@@ -1,0 +1,363 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"storageAccountName": {
+			"type": "string",
+			"metadata": {
+				"description": "Unique Storage Account Name"
+			}
+		},
+		"storageAccountType": {
+			"type": "string",
+			"defaultValue": "Standard_LRS",
+			"allowedValues": [
+				"Standard_LRS",
+				"Standard_GRS",
+				"Standard_ZRS",
+				"Premium_LRS"
+			],
+			"metadata": {
+				"description": "Storage Account type"
+			}
+		},
+		"dataFactoryName": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the data factory. Must be globally unique."
+			}
+		},
+		"dataFactoryLocation": {
+			"type": "string",
+			"allowedValues": [
+				"East US",
+				"East US 2"
+			],
+			"defaultValue": "East US 2",
+			"metadata": {
+				"description": "Location of the data factory. Currently, only East US and East US 2 are supported. "
+			}
+		},
+		"blobContainer": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the blob container in the Azure Storage account."
+			}
+		},
+		"servicePrincipalId": {
+			"type": "string",
+			"metadata": {
+				"description": "The ID of the service principal that has permissions to create HDInsight clusters in your subscription."
+			}
+		},
+		"servicePrincipalKey": {
+			"type": "string",
+			"metadata": {
+				"description": "The access key of the service principal that has permissions to create HDInsight clusters in your subscription."
+			}
+		},
+		 "adlAnalyticsName": {
+		  "type": "string",
+		  "metadata": {
+			"description": "The name of the Data Lake Analytics account to create."
+		  }
+		},
+		"adlStoreName": {
+		  "type": "string",
+		  "metadata": {
+			"description": "The name of the Data Lake Store account to create."
+		  }
+		},
+		"location": {
+		  "type": "string",
+		  "allowedValues": [
+			"East US 2",
+			"Central US",
+			"North Europe"
+		  ],
+		  "defaultValue": "East US 2",
+		  "metadata": {
+			"description": "The location in which the resources will be created."
+		  }
+		},
+		"eventHubNamespaceName": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the EventHub namespace"
+			}
+		},
+		"eventhubSku": {
+			"type": "string",
+			"allowedValues": [
+				"Basic",
+				"Standard"
+			],
+			"defaultValue": "Standard",
+			"metadata": {
+				"description": "The messaging tier for service Bus namespace"
+			}
+		},
+		"skuCapacity": {
+			"type": "int",
+			"allowedValues": [
+				1,
+				2,
+				4
+			],
+			"defaultValue": 1,
+			"metadata": {
+				"description": "MessagingUnits for premium namespace"
+			}
+		},
+		"isAutoInflateEnabled": {
+			"type": "string",
+			"defaultValue": "False",
+			"allowedValues": [
+				"True",
+				"False"
+			],
+			"metadata": {
+				"description": "Enable or disable AutoInflate"
+			}
+		},
+		"maximumThroughputUnits": {
+			"type": "int",
+			"defaultValue": 0,
+			"minValue": 0,
+			"maxValue": 20,
+			"metadata": {
+				"description": "Upper limit of throughput units when AutoInflate is enabled, vaule should be within 0 to 20 throughput units."
+			}
+		},
+		"eventHubName": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Event Hub"
+			}
+		},
+		"messageRetentionInDays": {
+			"type": "int",
+			"defaultValue": 1,
+			"minValue": 1,
+			"maxValue": 7,
+			"metadata": {
+				"description": "How long to retain the data in Event Hub"
+			}
+		},
+		"partitionCount": {
+			"type": "int",
+			"defaultValue": 2,
+			"minValue": 2,
+			"maxValue": 32,
+			"metadata": {
+				"description": "Number of partitions chosen"
+			}
+		},
+		"captureEnabled": {
+			"type": "string",
+			"defaultValue": "true",
+			"allowedValues": [
+				"false",
+				"true"
+			],
+			"metadata": {
+				"description": "Enable or disable the Capture feature for your Event Hub"
+			}
+		},
+		"captureEncodingFormat": {
+			"type": "string",
+			"defaultValue": "Avro",
+			"allowedValues": [
+				"Avro"
+			],
+			"metadata": {
+				"description": "The encoding format Eventhub capture serializes the EventData when archiving to your storage"
+			}
+		},
+		"captureTime": {
+			"type": "int",
+			"defaultValue": 300,
+			"minValue": 60,
+			"maxValue": 900,
+			"metadata": {
+				"description": "the time window in seconds for the archival"
+			}
+		},
+		"captureSize": {
+			"type": "int",
+			"defaultValue": 10485760,
+			"minValue": 10485760,
+			"maxValue": 524288000,
+			"metadata": {
+				"description": "the size window in bytes for evetn hub capture"
+			}
+		},
+		"captureNameFormat": {
+			"type": "string",
+			"defaultValue": "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
+			"allowedValues": [
+				"{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
+				"{Year}/{Month}/{Day}/{Namespace}/{EventHub}/{PartitionId}/{Hour}/{Minute}/{Second}",
+				"{Year}/{Month}/{Day}/{Hour}/{Namespace}/{EventHub}/{PartitionId}/{Minute}/{Second}"
+			],
+			"metadata": {
+				"description": "A Capture Name Format must contain {Namespace}, {EventHub}, {PartitionId}, {Year}, {Month}, {Day}, {Hour}, {Minute} and {Second} fields. These can be arranged in any order with or without delimeters. E.g.  Prod_{EventHub}/{Namespace}\\{PartitionId}_{Year}_{Month}/{Day}/{Hour}/{Minute}/{Second}"
+			}
+		}
+	},
+	"variables": {},
+	"resources": [{
+			"type": "Microsoft.Resources/deployments",
+			"name": "storageAccount",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri":	"https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/storageAccount.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					},
+					"storageAccountType": {
+						"value": "[parameters('storageAccountType')]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "dataFactory",
+			"apiVersion": "2018-02-01",
+			"dependsOn": [
+				"storageAccount"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/dataFactory.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					},
+					"dataFactoryName": {
+						"value": "[parameters('dataFactoryName')]"
+					},
+					"dataFactoryLocation": {
+						"value": "[parameters('dataFactoryLocation')]"
+					},
+					"blobContainer": {
+						"value": "[parameters('blobContainer')]"
+					},
+					"clientAzureStorageConnectionString": {
+						"value": "[reference('storageAccount').outputs.clientAzureStorageConnectionString.value]"
+					},
+					"servicePrincipalId": {
+						"value": "[parameters('servicePrincipalId')]"
+					},
+					"servicePrincipalKey": {
+						"value": "[parameters('servicePrincipalKey')]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "dataLakeAnalytics",
+			"apiVersion": "2018-02-01",
+			"dependsOn": [
+				"storageAccount"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri":	"https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/datalakeAnalytics.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"adlAnalyticsName": {
+					  "value": "[parameters('adlAnalyticsName')]"
+					},
+					"adlStoreName": {
+					  "value": "[parameters('adlStoreName')]"
+					},
+					"location": {
+					  "value": "[parameters('location')]"
+					},
+					"storageAccountName": {
+					  "value": "[parameters('storageAccountName')]"
+					},
+					"accessKey":{
+						"value": "[reference('storageAccount').outputs.accessKey.value]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "EventHubTemplate",
+			"apiVersion": "2018-02-01",
+			"dependsOn": [
+                "dataLakeAnalytics"
+            ],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/EventHubARMTemplate.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"eventHubNamespaceName": {
+						"value":"[parameters('eventHubNamespaceName')]"
+					},
+					"eventhubSku": {
+						"value":"[parameters('eventhubSku')]"
+					},
+					"skuCapacity": {
+						"value":"[parameters('skuCapacity')]"
+					},
+					"isAutoInflateEnabled": {
+						"value":"[parameters('isAutoInflateEnabled')]"
+					},
+					"maximumThroughputUnits": {
+						"value":"[parameters('maximumThroughputUnits')]"
+					},
+					"eventHubName": {
+						"value":"[parameters('eventHubName')]"
+					},
+					"messageRetentionInDays": {
+						"value":"[parameters('messageRetentionInDays')]"
+					},
+					"partitionCount": {
+						"value":"[parameters('partitionCount')]"
+					},
+					"captureEnabled": {
+						"value":"[parameters('captureEnabled')]"
+					},
+					"captureEncodingFormat": {
+						"value":"[parameters('captureEncodingFormat')]"
+					},
+					"captureTime": {
+						"value":"[parameters('captureTime')]"
+					},
+					"captureSize": {
+						"value":"[parameters('captureSize')]"
+					},
+					"storageAccountName": {
+						"value":"[parameters('storageAccountName')]"
+					},
+					"blobContainer": {
+						"value":"[parameters('blobContainer')]"
+					},
+					"captureNameFormat": {
+						"value":"[parameters('captureNameFormat')]"
+					}
+				}
+			}
+		}
+	],
+	"outputs": {}
+}
