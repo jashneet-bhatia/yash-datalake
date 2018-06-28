@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "hello azure"
+echo "hell azure"
