@@ -306,7 +306,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/EventHubARMTemplate.json",
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/eventHub.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
