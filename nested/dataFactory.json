@@ -47,7 +47,7 @@
 	},
 	"variables": {
 		"yashAzureStorageLinkedServiceName": "LinkedServiceToYashAzureStorage",
-		"yashAzureStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=yashinnovationstorage;AccountKey=W09mx0xo/yEeJyCx8qNH2vtYCxhrDIMLayCrH/aZc/Gef7BIGCCcIm+4fjC9xwXEsOg2X8/QDHNr7CMmuQq5Xg==;EndpointSuffix=core.windows.net",
+		"SASUri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource?sv=2017-11-09&sr=c&sig=qoJfA%2BX7K7YdOAjqZFFfuv4C8MVbbQkeBhugnG7DoKk%3D&se=2023-06-20T10%3A55%3A45Z&sp=rl",
 		"clientAzureStorageLinkedServiceName": "LinkedServiceToClientAzureStorage",
 		"onDemandHDInsightLinkedServiceName": "LinkedServiceToOnDemandHDInsight",
 		"inputDatasetName": "DatasetIn",
@@ -73,9 +73,9 @@
 					"type": "AzureStorage",
 					"description": "Azure Storage linked service",
 					"typeProperties": {
-						"connectionString": {
-							"value": "[variables('yashAzureStorageConnectionString')]",
-							"type": "SecureString"
+						"sasUri": {
+							"type": "SecureString",
+							"value": "[variables('SASUri')]"
 						}
 					}
 				}
