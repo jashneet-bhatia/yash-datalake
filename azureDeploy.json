@@ -56,29 +56,29 @@
 				"description": "The access key of the service principal that has permissions to create HDInsight clusters in your subscription."
 			}
 		},
-		 "adlAnalyticsName": {
-		  "type": "string",
-		  "metadata": {
-			"description": "The name of the Data Lake Analytics account to create."
-		  }
+		"adlAnalyticsName": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of the Data Lake Analytics account to create."
+			}
 		},
 		"adlStoreName": {
-		  "type": "string",
-		  "metadata": {
-			"description": "The name of the Data Lake Store account to create."
-		  }
+			"type": "string",
+			"metadata": {
+				"description": "The name of the Data Lake Store account to create."
+			}
 		},
 		"location": {
-		  "type": "string",
-		  "allowedValues": [
-			"East US 2",
-			"Central US",
-			"North Europe"
-		  ],
-		  "defaultValue": "East US 2",
-		  "metadata": {
-			"description": "The location in which the resources will be created."
-		  }
+			"type": "string",
+			"allowedValues": [
+				"East US 2",
+				"Central US",
+				"North Europe"
+			],
+			"defaultValue": "East US 2",
+			"metadata": {
+				"description": "The location in which the resources will be created."
+			}
 		},
 		"eventHubNamespaceName": {
 			"type": "string",
@@ -129,10 +129,16 @@
 				"description": "Upper limit of throughput units when AutoInflate is enabled, vaule should be within 0 to 20 throughput units."
 			}
 		},
-		"eventHubName": {
+		"DataCleaningInputStream": {
 			"type": "string",
 			"metadata": {
 				"description": "Name of the Event Hub"
+			}
+		},
+		"DataCleaningOutputStream": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the second Event Hub"
 			}
 		},
 		"messageRetentionInDays": {
@@ -203,6 +209,38 @@
 			"metadata": {
 				"description": "A Capture Name Format must contain {Namespace}, {EventHub}, {PartitionId}, {Year}, {Month}, {Day}, {Hour}, {Minute} and {Second} fields. These can be arranged in any order with or without delimeters. E.g.  Prod_{EventHub}/{Namespace}\\{PartitionId}_{Year}_{Month}/{Day}/{Hour}/{Minute}/{Second}"
 			}
+		},
+
+		"DataCleaningStreamAnalyticsJob": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the First stream Analytics Job"
+			},
+			"defaultValue": "cleanOrdersStreamAnalyticsJob"
+		},
+
+		"DataAggregatorStreamAnalyticsJob1": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Second stream Analytics Job"
+			},
+			"defaultValue": "sellingProductPerMinJob"
+		},
+
+		"DataAggregatorStreamAnalyticsJob2": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Third stream Analytics Job"
+			},
+			"defaultValue": "geoLocationsJob"
+		},
+
+		"DataAggregatorStreamAnalyticsJob3": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Third stream Analytics Job"
+			},
+			"defaultValue": "ageGroupWiseRevenueJob"
 		}
 	},
 	"variables": {},
@@ -213,7 +251,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri":	"https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/storageAccount.json",
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/storageAccount.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -274,23 +312,23 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri":	"https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/datalakeAnalytics.json",
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/datalakeAnalytics.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
 					"adlAnalyticsName": {
-					  "value": "[parameters('adlAnalyticsName')]"
+						"value": "[parameters('adlAnalyticsName')]"
 					},
 					"adlStoreName": {
-					  "value": "[parameters('adlStoreName')]"
+						"value": "[parameters('adlStoreName')]"
 					},
 					"location": {
-					  "value": "[parameters('location')]"
+						"value": "[parameters('location')]"
 					},
 					"storageAccountName": {
-					  "value": "[parameters('storageAccountName')]"
+						"value": "[parameters('storageAccountName')]"
 					},
-					"accessKey":{
+					"accessKey": {
 						"value": "[reference('storageAccount').outputs.accessKey.value]"
 					}
 				}
@@ -301,63 +339,108 @@
 			"name": "EventHubTemplate",
 			"apiVersion": "2018-02-01",
 			"dependsOn": [
-                "dataLakeAnalytics"
-            ],
+				"dataLakeAnalytics"
+			],
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/eventHub.json",
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/updated/eventHub.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
 					"eventHubNamespaceName": {
-						"value":"[parameters('eventHubNamespaceName')]"
+						"value": "[parameters('eventHubNamespaceName')]"
 					},
 					"eventhubSku": {
-						"value":"[parameters('eventhubSku')]"
+						"value": "[parameters('eventhubSku')]"
 					},
 					"skuCapacity": {
-						"value":"[parameters('skuCapacity')]"
+						"value": "[parameters('skuCapacity')]"
 					},
 					"isAutoInflateEnabled": {
-						"value":"[parameters('isAutoInflateEnabled')]"
+						"value": "[parameters('isAutoInflateEnabled')]"
 					},
 					"maximumThroughputUnits": {
-						"value":"[parameters('maximumThroughputUnits')]"
+						"value": "[parameters('maximumThroughputUnits')]"
 					},
-					"eventHubName": {
-						"value":"[parameters('eventHubName')]"
+					"DataCleaningInputStream": {
+						"value": "[parameters('DataCleaningInputStream')]"
+					},
+					"DataCleaningOutputStream": {
+						"value": "[parameters('DataCleaningOutputStream')]"
 					},
 					"messageRetentionInDays": {
-						"value":"[parameters('messageRetentionInDays')]"
+						"value": "[parameters('messageRetentionInDays')]"
 					},
 					"partitionCount": {
-						"value":"[parameters('partitionCount')]"
+						"value": "[parameters('partitionCount')]"
 					},
 					"captureEnabled": {
-						"value":"[parameters('captureEnabled')]"
+						"value": "[parameters('captureEnabled')]"
 					},
 					"captureEncodingFormat": {
-						"value":"[parameters('captureEncodingFormat')]"
+						"value": "[parameters('captureEncodingFormat')]"
 					},
 					"captureTime": {
-						"value":"[parameters('captureTime')]"
+						"value": "[parameters('captureTime')]"
 					},
 					"captureSize": {
-						"value":"[parameters('captureSize')]"
+						"value": "[parameters('captureSize')]"
 					},
 					"storageAccountName": {
-						"value":"[parameters('storageAccountName')]"
-					},
-					"blobContainer": {
-						"value":"[parameters('blobContainer')]"
+						"value": "[parameters('storageAccountName')]"
 					},
 					"captureNameFormat": {
-						"value":"[parameters('captureNameFormat')]"
+						"value": "[parameters('captureNameFormat')]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "streamAnalyticsJobsTemplate",
+			"apiVersion": "2018-02-01",
+			"dependsOn": [
+				"EventHubTemplate"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/updated/streamAnalytics.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"eventHubNamespaceName": {
+						"value": "[parameters('eventHubNamespaceName')]"
+					},
+					"DataCleaningInputStream": {
+						"value": "[parameters('DataCleaningInputStream')]"
+					},
+					"DataCleaningOutputStream": {
+						"value": "[parameters('DataCleaningOutputStream')]"
+					},
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					},
+					"sharedAccessPolicyKey": {
+						"value": "[reference('EventHubTemplate').outputs.SharedAccessPolicyPrimaryKey.value]"
+					},
+					"DataCleaningStreamAnalyticsJob": {
+						"value": "[parameters('DataCleaningStreamAnalyticsJob')]"
+					},
+					"DataAggregatorStreamAnalyticsJob1": {
+						"value": "[parameters('DataAggregatorStreamAnalyticsJob1')]"
+					},
+					"DataAggregatorStreamAnalyticsJob2": {
+						"value": "[parameters('DataAggregatorStreamAnalyticsJob2')]"
+					},
+					"DataAggregatorStreamAnalyticsJob3": {
+						"value": "[parameters('DataAggregatorStreamAnalyticsJob3')]"
 					}
 				}
 			}
 		}
+
 	],
 	"outputs": {}
 }
