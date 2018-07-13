@@ -1,0 +1,272 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+		"appName": {
+			"defaultValue": "QuickstartFunctionApp",
+			"type": "String"
+		},
+		"location": {
+			"type": "string",
+			"defaultValue": "[resourceGroup().location]",
+			"metadata": {
+				"description": "Location for all resources."
+			}
+		},
+		"config_web_name": {
+			"defaultValue": "web",
+			"type": "String"
+		},
+		"servicePrincipalId": {
+			"type": "string",
+			"metadata": {
+				"description": "The ID of the service principal"
+			}
+		}
+	},
+    "variables": {
+		 "pythonExtension": "python2713x64",
+		 "functionAppName": "[parameters('appName')]",
+		 "hostingPlanName": "[parameters('appName')]"
+	},
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
+                "capacity": 0
+            },
+            "kind": "functionapp",
+            "name": "[variables('hostingPlanName')]",
+            "apiVersion": "2016-09-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "name": "[variables('hostingPlanName')]",
+                "workerTierName": null,
+                "adminSiteName": null,
+                "hostingEnvironmentProfile": null,
+                "perSiteScaling": false,
+                "reserved": false,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/18bc600e-57c7-4ea5-b64a-bb62f1f34d2c/resourceGroups/innovationgroup-BigData/providers/Microsoft.Web/sites/demotriggerapp1234'.",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp",
+            "name": "[variables('functionAppName')]",
+            "apiVersion": "2016-08-01",
+            "location":"[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(variables('functionAppName'),'.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(variables('functionAppName'),'.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+				"siteConfig": {
+				    "handlerMappings": [
+					{
+					  "arguments": "D:\\home\\Python27\\wfastcgi.py",
+					  "extension": "fastCgi",
+					  "scriptProcessor": "D:\\home\\Python27\\python.exe"
+					}
+				  ],
+				  "appSettings": [
+					{
+					  "name": "AzureWebJobsStorage",
+					  "value": "DefaultEndpointsProtocol=https;AccountName=elasticclusterstorage;AccountKey=fkywunTRXbDjgImKkp2L8b/guYgCU9SGXO1uVO837N8PTbvNbLEZiAWOGOhl/NJXdepEpLM3+VXHtFDMwVybDQ=="
+					}
+				  ]
+				  
+				},
+                "reserved": false,
+                "scmSiteAlsoStopped": false,
+                "hostingEnvironmentProfile": null,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 1536,
+                "dailyMemoryTimeQuota": 0,
+                "cloningInfo": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+            ],
+		    "resources": [	
+					{
+					  "name": "[variables('pythonExtension')]",
+					  "type": "siteextensions",
+					  "apiVersion": "2016-08-01",
+					  "properties": {},
+					  "dependsOn": [
+						"[resourceId('Microsoft.Web/sites',variables('functionAppName'))]"
+					  ]
+					},
+				{
+                    "name": "MSDeploy",
+                    "type": "extensions",
+                    "location": "[parameters('location')]",
+                    "apiVersion": "2015-08-01",
+                    "dependsOn": [
+                        "[concat('Microsoft.Web/sites/', variables('functionAppName'))]",
+						"[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+						"[resourceId('Microsoft.Web/sites/siteextensions', variables('functionAppName'), variables('pythonExtension'))]"
+                    ],
+                    "tags": {
+                        "displayName": "pythonextension"
+                    },
+                    "properties": {
+                        "packageUri": "https://github.com/KuldeepShikhare/AzureQuickStartDatalake/raw/develop/scripts/YashQuickStartFunctionApp.zip",
+                        "dbType": "None",
+                        "connectionString": ""
+                    }
+                }
+
+				
+			]
+        },
+		
+		{
+            "type": "Microsoft.Web/sites/config",
+            "name": "[concat(variables('functionAppName'), '/', parameters('config_web_name'))]",
+            "apiVersion": "2016-08-01",
+            "location":  "[parameters('location')]",
+            "scale": null,
+            "properties": {
+				"numberOfWorkers": 1,
+				"defaultDocuments": [
+					"Default.htm",
+					"Default.html",
+					"Default.asp",
+					"index.htm",
+					"index.html",
+					"iisstart.htm",
+					"default.aspx",
+					"index.php"
+				],
+				"netFrameworkVersion": "v4.0",
+				"phpVersion": "5.6",
+				"pythonVersion": "2.7",
+				"nodeVersion": "",
+				"linuxFxVersion": "",
+				"windowsFxVersion": null,
+				"requestTracingEnabled": false,
+				"remoteDebuggingEnabled": false,
+				"remoteDebuggingVersion": "VS2012",
+				"httpLoggingEnabled": false,
+				"logsDirectorySizeLimit": 35,
+				"detailedErrorLoggingEnabled": false,
+				"publishingUsername": "[concat('$',variables('functionAppName'))]",
+				"publishingPassword": null,
+				"appSettings": null,
+				"metadata": null,
+				"connectionStrings": null,
+				"machineKey": null,
+				"documentRoot": null,
+				"scmType": "None",
+				"use32BitWorkerProcess": true,
+				"webSocketsEnabled": false,
+				"alwaysOn": false,
+				"javaVersion": null,
+				"javaContainer": null,
+				"javaContainerVersion": null,
+				"appCommandLine": "",
+				"managedPipelineMode": "Integrated",
+				"virtualApplications": [{
+					"virtualPath": "/",
+					"physicalPath": "site\\wwwroot",
+					"preloadEnabled": false,
+					"virtualDirectories": null
+				}],
+				"winAuthAdminState": 0,
+				"winAuthTenantState": 0,
+				"customAppPoolIdentityAdminState": false,
+				"customAppPoolIdentityTenantState": false,
+				"runtimeADUser": null,
+				"runtimeADUserPassword": null,
+				"loadBalancing": "LeastRequests",
+				"routingRules": [],
+				"experiments": {
+					"rampUpRules": []
+				},
+				"limits": null,
+				"autoHealEnabled": false,
+				"autoHealRules": null,
+				"tracingOptions": null,
+				"vnetName": "",
+				"siteAuthEnabled": true,
+				"siteAuthSettings": {
+					"enabled": true,
+					"unauthenticatedClientAction": "RedirectToLoginPage",
+					"tokenStoreEnabled": true,
+					"allowedExternalRedirectUrls": "",
+					"defaultProvider": "AzureActiveDirectory",
+					"clientId": "[parameters('servicePrincipalId')]",
+					"clientSecret": null,
+					"issuer": "https://sts.windows.net/638456b8-8343-4e48-9ebe-4f5cf9a1997d/",
+					"allowedAudiences": null,
+					"additionalLoginParams": null,
+					"isAadAutoProvisioned": false,
+					"googleClientId": null,
+					"googleClientSecret": null,
+					"googleOAuthScopes": null,
+					"facebookAppId": null,
+					"facebookAppSecret": null,
+					"facebookOAuthScopes": null,
+					"twitterConsumerKey": null,
+					"twitterConsumerSecret": null,
+					"microsoftAccountClientId": null,
+					"microsoftAccountClientSecret": null,
+					"microsoftAccountOAuthScopes": null
+				},
+				"cors": {
+					"allowedOrigins": [
+						"https://functions.azure.com",
+						"https://functions-staging.azure.com",
+						"https://functions-next.azure.com"
+					]
+				},
+				"push": null,
+				"apiDefinition": null,
+				"autoSwapSlotName": null,
+				"localMySqlEnabled": false,
+				"managedServiceIdentityId": null,
+				"xManagedServiceIdentityId": null,
+				"ipSecurityRestrictions": null,
+				"http20Enabled": false,
+				"minTlsVersion": "1.0",
+				"ftpsState": "AllAllowed",
+				"http": {
+					"routePrefix": ""
+				}
+			},
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]",
+				"[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+				"[concat('Microsoft.Web/sites/',variables('functionAppName'),'/Extensions/MSDeploy')]"
+            ]
+        }
+	]
+}
