@@ -48,5 +48,3 @@ sudo systemctl start kibana.service
 echo "line 22***"
 sudo systemctl enable kibana.service
 echo "line 23***"
-
-
