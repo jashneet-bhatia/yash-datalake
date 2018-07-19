@@ -210,7 +210,6 @@
 				"description": "A Capture Name Format must contain {Namespace}, {EventHub}, {PartitionId}, {Year}, {Month}, {Day}, {Hour}, {Minute} and {Second} fields. These can be arranged in any order with or without delimeters. E.g.  Prod_{EventHub}/{Namespace}\\{PartitionId}_{Year}_{Month}/{Day}/{Hour}/{Minute}/{Second}"
 			}
 		},
-
 		"DataCleaningStreamAnalyticsJob": {
 			"type": "string",
 			"metadata": {
@@ -234,13 +233,36 @@
 			},
 			"defaultValue": "geoLocationsJob"
 		},
-
 		"DataAggregatorStreamAnalyticsJob3": {
 			"type": "string",
 			"metadata": {
 				"description": "Name of the Third stream Analytics Job"
 			},
 			"defaultValue": "ageGroupWiseRevenueJob"
+		},
+		"appName": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Event Hub"
+			}
+		},
+		"client_id": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Event Hub"
+			}
+		},
+		"user_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Event Hub"
+			}
+		},
+		"password": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Event Hub"
+			}
 		}
 	},
 	"variables": {},
@@ -436,6 +458,50 @@
 					},
 					"DataAggregatorStreamAnalyticsJob3": {
 						"value": "[parameters('DataAggregatorStreamAnalyticsJob3')]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "azureFunction",
+			"apiVersion": "2018-02-01",
+			"dependsOn": [
+				"EventHubTemplate"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/azureFunction.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					},
+					"appName": {
+						"value": "[parameters('appName')]"
+					},
+					"location": {
+						"value": "[parameters('location')]"
+					},
+					"web_app_id": {
+						"value": "[parameters('servicePrincipalId')]"
+					},
+					"web_app_secret": {
+						"value": "[parameters('servicePrincipalKey')]"
+					},
+					"client_id": {
+						"value": "[parameters('client_id')]"
+					},
+					"datafactory_name": {
+						"value": "[parameters('dataFactoryName')]"
+					},
+					"user_name": {
+						"value": "[parameters('user_name')]"
+					},
+					"password": {
+						"value": "[parameters('user_name')]"
 					}
 				}
 			}
