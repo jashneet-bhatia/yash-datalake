@@ -48,6 +48,7 @@ sudo systemctl start kibana.service
 echo "line 22***"
 sudo systemctl enable kibana.service
 echo "line 23***"
+sudo mkdir /home/azure
 cd /home/azure
 wget http://dist.neo4j.org/neo4j-community-3.4.1-unix.tar.gz
 sudo tar -xvzf neo4j-community-3.4.1-unix.tar.gz
@@ -57,5 +58,3 @@ sudo echo "dbms.connector.https.listen_address=0.0.0.0:7473" >> /home/azure/neo4
 sudo echo "dbms.connector.bolt.listen_address=0.0.0.0:7687" >> /home/azure/neo4j-community-3.4.1/conf/neo4j.conf
 cd /home/azure/neo4j-community-3.4.1/bin
 sudo ./neo4j start
-
-
