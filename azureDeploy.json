@@ -246,23 +246,56 @@
 				"description": "Name of the Event Hub"
 			}
 		},
-		"client_id": {
+		"vmSize": {
 			"type": "string",
+			"allowedValues": [
+				"Standard_A1",
+				"Standard_A2",
+				"Standard_A3",
+				"Standard_A4",
+				"Standard_D1_v2",
+				"Standard_D2_v2",
+				"Standard_D3_v2",
+				"Standard_D4_v2"
+			],
 			"metadata": {
-				"description": "Name of the Event Hub"
+				"description": "Size of vm"
 			}
 		},
-		"user_name": {
+		"vm_username": {
 			"type": "string",
 			"metadata": {
-				"description": "Name of the Event Hub"
+				"description": "Username for the Virtual Machine."
 			}
 		},
-		"password": {
+		"vm_password": {
+			"type": "securestring",
+			"metadata": {
+				"description": "Password for the Virtual Machine."
+			}
+		},
+		"dnsLabelPrefix": {
 			"type": "string",
 			"metadata": {
-				"description": "Name of the Event Hub"
-			}
+				"description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+			},
+			"defaultValue": "[concat('datalake',uniquestring(resourceGroup().id,deployment().name))]"
+		},
+		"ES_Function_name": {
+			"defaultValue": "demotriggerappESFunction1234",
+			"type": "String"
+		},
+		"serverfarms_EastUS2Plan_name": {
+			"defaultValue": "EastUS2Plan",
+			"type": "String"
+		},
+		"config_web_name_4": {
+			"defaultValue": "web",
+			"type": "String"
+		},
+		"hostnamebinding": {
+			"defaultValue": "demotriggerappESFunction1234.azurewebsites.net",
+			"type": "String"
 		}
 	},
 	"variables": {},
@@ -366,7 +399,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/updated/eventHub.json",
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/eventHub.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -428,7 +461,7 @@
 			"properties": {
 				"mode": "Incremental",
 				"templateLink": {
-					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/updated/streamAnalytics.json",
+					"uri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource/templates/nested/streamAnalytics.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -479,6 +512,9 @@
 					"storageAccountName": {
 						"value": "[parameters('storageAccountName')]"
 					},
+					"storageAccountConnectionString": {
+						"value": "[reference('storageAccount').outputs.clientAzureStorageConnectionString.value]"
+					},
 					"appName": {
 						"value": "[parameters('appName')]"
 					},
@@ -491,22 +527,122 @@
 					"web_app_secret": {
 						"value": "[parameters('servicePrincipalKey')]"
 					},
-					"client_id": {
-						"value": "[parameters('client_id')]"
-					},
 					"datafactory_name": {
 						"value": "[parameters('dataFactoryName')]"
 					},
-					"user_name": {
-						"value": "[parameters('user_name')]"
+					"eventhub_name": {
+						"value": "[parameters('DataCleaningInputStream')]"
+					},
+					"eventhub_namespace": {
+						"value": "[parameters('eventHubNamespaceName')]"
+					},
+					"sas_key": {
+						"value": "[reference('EventHubTemplate').outputs.SharedAccessPolicyPrimaryKey.value]"
+					},
+					"adla_account_name": {
+						"value": "[parameters('adlAnalyticsName')]"
+					},
+					"DataCleaningStreamAnalyticsJob": {
+						"value": "[parameters('DataCleaningStreamAnalyticsJob')]"
+					},
+					"DataAggregatorStreamAnalyticsJob1": {
+						"value": "[parameters('DataAggregatorStreamAnalyticsJob1')]"
+					},
+					"DataAggregatorStreamAnalyticsJob2": {
+						"value": "[parameters('DataAggregatorStreamAnalyticsJob2')]"
+					},
+					"DataAggregatorStreamAnalyticsJob3": {
+						"value": "[parameters('DataAggregatorStreamAnalyticsJob3')]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "KibanaESDeployedVM",
+			"apiVersion": "2018-02-01",
+			"dependsOn": [
+				"storageAccount"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://elasticclusterstorage.blob.core.windows.net/published/ESInstallKibanaVMTemplate.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					},
+					"vmSize": {
+						"value": "[parameters('vmSize')]"
+					},
+					"username": {
+						"value": "[parameters('vm_username')]"
 					},
 					"password": {
-						"value": "[parameters('user_name')]"
+						"value": "[parameters('vm_password')]"
+					},
+					"dnsLabelPrefix": {
+						"value": "[parameters('dnsLabelPrefix')]"
+					},
+					"location": {
+						"value": "[parameters('location')]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"name": "KibanaFunctionApp",
+			"apiVersion": "2018-02-01",
+			"dependsOn": [
+				"KibanaESDeployedVM"
+			],
+
+			"properties": {
+				"mode": "Incremental",
+				"templateLink": {
+					"uri": "https://elasticclusterstorage.blob.core.windows.net/published/FunctionApp_FinalTemplate.json",
+
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"storageConnectionString": {
+						"value": "[reference('storageAccount').outputs.clientAzureStorageConnectionString.value]"
+					},
+					"kibanaFunctionHost": {
+						"value": "[Concat(parameters('ES_Function_name'),'.azurewebsites.net')]"
+					},
+					"kibanaFunctionPath": {
+						"value": "/api/AddKibanaDashboard"
+					},
+					"EsIP": {
+						"value": "[reference('KibanaESDeployedVM').outputs.publicIpAddress.value]"
+					},
+					"serverfarms_EastUS2Plan_name": {
+						"value": "[parameters('serverfarms_EastUS2Plan_name')]"
+					},
+					"sites_demotriggerapp1234_name": {
+						"value": "[parameters('ES_Function_name')]"
+					},
+					"location": {
+						"value": "[parameters('location')]"
+					},
+					"config_web_name_4": {
+						"value": "[parameters('config_web_name_4')]"
+					},
+					"hostnamebinding": {
+						"value": "[parameters('hostnamebinding')]"
 					}
 				}
 			}
 		}
-
 	],
-	"outputs": {}
+	"outputs": {
+		"wizard_url": {
+			"type": "string",
+			"value": "[Concat('https://',parameters('appName'),'.azurewebsites.net/api/quickstart_wizard')]"
+		}
+	}
 }
