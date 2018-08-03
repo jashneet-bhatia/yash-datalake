@@ -25,12 +25,6 @@
 				"description": "The ID of the service principal web/api"
 			}
 		},
-		"client_id": {
-			"type": "string",
-			"metadata": {
-				"description": "The ID of the service principal native app"
-			}
-		},
 		"datafactory_name": {
 			"type": "string",
 			"metadata": {
@@ -43,16 +37,58 @@
 				"description": "storage account name"
 			}
 		},
-		"user_name": {
+		"storageAccountConnectionString": {
 			"type": "string",
 			"metadata": {
-				"description": "The ID of the service principal"
+				"description": "storage account connection string"
 			}
 		},
-		"password": {
+		"eventhub_name": {
 			"type": "string",
 			"metadata": {
-				"description": "The ID of the service principal"
+				"description": "Event hub name"
+			}
+		},
+		"eventhub_namespace": {
+			"type": "string",
+			"metadata": {
+				"description": "eventhub namespace name"
+			}
+		},
+		"sas_key": {
+			"type": "string",
+			"metadata": {
+				"description": " event hub SharedAccessPolicyPrimaryKey"
+			}
+		},
+		"adla_account_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Azure datalake analytics name"
+			}
+		},
+		"DataCleaningStreamAnalyticsJob": {
+			"type": "String",
+			"metadata": {
+				"description": " Azure stream analytics job name 1"
+			}
+		},
+		"DataAggregatorStreamAnalyticsJob1": {
+			"type": "String",
+			"metadata": {
+				"description": " Azure stream analytics job name 1"
+			}
+		},
+		"DataAggregatorStreamAnalyticsJob2": {
+			"type": "String",
+			"metadata": {
+				"description": " Azure stream analytics job name 2"
+			}
+		},
+		"DataAggregatorStreamAnalyticsJob3": {
+			"type": "String",
+			"metadata": {
+				"description": " Azure stream analytics job name 3"
 			}
 		}
 	},
@@ -125,11 +161,7 @@
 					}],
 					"appSettings": [{
 							"name": "AzureWebJobsStorage",
-							"value": "DefaultEndpointsProtocol=https;AccountName=elasticclusterstorage;AccountKey=fkywunTRXbDjgImKkp2L8b/guYgCU9SGXO1uVO837N8PTbvNbLEZiAWOGOhl/NJXdepEpLM3+VXHtFDMwVybDQ=="
-						},
-						{
-							"name": "client_id",
-							"value": "[parameters('client_id')]"
+							"value": "['storageAccountConnectionString']"
 						},
 						{
 							"name": "datafactory_name",
@@ -138,10 +170,6 @@
 						{
 							"name": "function_app_name",
 							"value": "[parameters('appName')]"
-						},
-						{
-							"name": "password",
-							"value": "[parameters('password')]"
 						},
 						{
 							"name": "resource_group",
@@ -160,16 +188,44 @@
 							"value": "[subscription().tenantId]"
 						},
 						{
-							"name": "user_name",
-							"value": "[parameters('user_name')]"
-						},
-						{
 							"name": "web_app_id",
 							"value": "[parameters('web_app_id')]"
 						},
 						{
 							"name": "web_app_secret",
 							"value": "[parameters('web_app_secret')]"
+						},
+						{
+							"name": "adla_account_name",
+							"value": "[parameters('adla_account_name')]"
+						},
+						{
+							"name": "eventhub_name",
+							"value": "[parameters('eventhub_name')]"
+						},
+						{
+							"name": "eventhub_namespace",
+							"value": "[parameters('eventhub_namespace')]"
+						},
+						{
+							"name": "sas_key",
+							"value": "[parameters('sas_key')]"
+						},
+						{
+							"name": "DataCleaningStreamAnalyticsJob",
+							"value": "[parameters('DataCleaningStreamAnalyticsJob')]"
+						},
+						{
+							"name": "DataAggregatorStreamAnalyticsJob1",
+							"value": "[parameters('DataAggregatorStreamAnalyticsJob1')]"
+						},
+						{
+							"name": "DataAggregatorStreamAnalyticsJob2",
+							"value": "[parameters('DataAggregatorStreamAnalyticsJob2')]"
+						},
+						{
+							"name": "DataAggregatorStreamAnalyticsJob3",
+							"value": "[parameters('DataAggregatorStreamAnalyticsJob3')]"
 						}
 					]
 
@@ -217,7 +273,6 @@
 				}
 			]
 		},
-
 		{
 			"type": "Microsoft.Web/sites/config",
 			"name": "[concat(variables('functionAppName'), '/', variables('config_web_name'))]",
