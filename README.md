@@ -15,7 +15,7 @@ Yash Data lake Walk through guide is build to assist you through the Server less
 2. Service Principal Key
 3. Assign required permissions
 4. Set Reply URL :
-	https://<your-function-app-name>.azurewebsites.net/.auth/login/aad/callback
+	https://your-function-app-name.azurewebsites.net/.auth/login/aad/callback
 	
 	[Note = your-function-app-name : The function name which you would be giving while deploying Yash Data Lake]
 	
