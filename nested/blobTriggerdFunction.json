@@ -384,7 +384,7 @@
                         "displayName": "pythonextension"
                     },
                     "properties": {
-                        "packageUri": "https://elasticclusterstorage.blob.core.windows.net/published/BlobTriggerFunctionUpdated.zip",
+                        "packageUri": "https://elasticclusterstorage.blob.core.windows.net/published/RawBlobTriggerFunction_updated_for_emptytriggered.zip",
                         "dbType": "None",
                         "connectionString": ""
                     }
