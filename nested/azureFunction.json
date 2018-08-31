@@ -94,7 +94,7 @@
 	},
 	"variables": {
 		"config_web_name": "web",
-		"pythonExtension": "python2714x64",
+		"pythonExtension": "python2713x64",
 		"functionAppName": "[parameters('appName')]",
 		"hostingPlanName": "[parameters('appName')]",
 		"tenant": "[subscription().tenantId]"
