@@ -41,9 +41,7 @@
             "type": "String"
         },
 		"storage_name":{
-			"type": "string",
-			"defaultValue": "testdatalakequeuestorage"
-		},
+			"type": "string"},
 		"storageConnectionString":{
 			 "type": "String"
 		}
