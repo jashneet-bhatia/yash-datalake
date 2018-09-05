@@ -49,7 +49,7 @@
 		
     },
     "variables": {
-		"pythonExtension": "python2713x64",
+		"pythonExtension": "azureappservice-python2714x64",
 	    "eventGridTopicName":"esEventgridTopic",
         "raweventGridSubscriptionName":"rawtopicsubscription" ,
 		"publishedeventGridSubscriptionName":"publishedtopicsubscription" ,
