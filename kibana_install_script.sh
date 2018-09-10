@@ -60,6 +60,6 @@ cd /home/azure/neo4j-community-3.4.1/bin
 sudo ./neo4j start
 cd /home/azure/neo4j-community-3.4.1/
 cd data/dbms/
-rm auth
+sudo rm auth
 /home/azure/neo4j-community-3.4.1/bin/neo4j-admin set-initial-password qwerty
 sudo ./neo4j restart
