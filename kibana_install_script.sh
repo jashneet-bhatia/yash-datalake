@@ -56,8 +56,10 @@ sudo echo "dbms.connector.https.listen_address=0.0.0.0:7473" >> /home/azure/neo4
 sudo echo "dbms.connector.http.listen_address=0.0.0.0:7474" >> /home/azure/neo4j-community-3.4.1/conf/neo4j.conf
 sudo echo "dbms.connector.https.listen_address=0.0.0.0:7473" >> /home/azure/neo4j-community-3.4.1/conf/neo4j.conf
 sudo echo "dbms.connector.bolt.listen_address=0.0.0.0:7687" >> /home/azure/neo4j-community-3.4.1/conf/neo4j.conf
+cd /home/azure/neo4j-community-3.4.1/bin
+sudo ./neo4j start
 cd /home/azure/neo4j-community-3.4.1/
 cd data/dbms/
 rm auth
 /home/azure/neo4j-community-3.4.1/bin/neo4j-admin set-initial-password qwerty
-sudo ./neo4j start
+sudo ./neo4j restart
