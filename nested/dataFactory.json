@@ -2,12 +2,6 @@
 	"contentVersion": "1.0.0.0",
 	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
 	"parameters": {
-		"KibanaESDeployedVMIP":{
-			"type": "string",
-			"metadata": {
-				"description": "Name of the data factory. Must be globally unique."
-			}
-		},
 		"dataFactoryName": {
 			"type": "string",
 			"metadata": {
@@ -52,7 +46,6 @@
 		}
 	},
 	"variables": {
-		"blobContainer":"raw",
 		"yashAzureStorageLinkedServiceName": "LinkedServiceToYashAzureStorage",
 		"SASUri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource?sv=2017-11-09&sr=c&sig=qoJfA%2BX7K7YdOAjqZFFfuv4C8MVbbQkeBhugnG7DoKk%3D&se=2023-06-20T10%3A55%3A45Z&sp=rl",
 		"clientAzureStorageLinkedServiceName": "LinkedServiceToClientAzureStorage",
@@ -61,7 +54,7 @@
 		"outputDatasetName": "DatasetOut",
 		"pipeline_name_1": "pipelineForDataMovement",
 		"pipeline_name_2": "pipelineForDataTransformation",
-		"entryFilePath": "Neo4JSparkTransformation-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
+		"entryFilePath": "raw_to_transformed.py"
 	},
 	"resources": [{
 		"name": "[parameters('dataFactoryName')]",
@@ -93,7 +86,7 @@
 				"dependsOn": [
 					"[parameters('dataFactoryName')]"
 				],
-				"apiVersion": "2018-06-01",
+				"apiVersion": "2017-09-01-preview",
 				"properties": {
 					"type": "AzureStorage",
 					"description": "Azure Storage linked service",
@@ -112,7 +105,7 @@
 					"[parameters('dataFactoryName')]",
 					"[variables('clientAzureStorageLinkedServiceName')]"
 				],
-				"apiVersion": "2018-06-01",
+				"apiVersion": "2017-09-01-preview",
 				"properties": {
 					"type": "HDInsightOnDemand",
 					"typeProperties": {
@@ -167,7 +160,7 @@
 				"properties": {
 					"type": "AzureBlob",
 					"typeProperties": {
-						"folderPath": "[variables('blobContainer')]"
+						"folderPath": "[parameters('blobContainer')]"
 					},
 					"linkedServiceName": {
 						"referenceName": "[variables('clientAzureStorageLinkedServiceName')]",
@@ -184,7 +177,7 @@
 					"[variables('inputDatasetName')]",
 					"[variables('outputDatasetName')]"
 				],
-				"apiVersion": "2018-06-01",
+				"apiVersion": "2017-09-01-preview",
 				"properties": {
 					"activities": [{
 						"type": "Copy",
@@ -228,13 +221,12 @@
 							"retryIntervalInSeconds": 30
 						},
 						"typeProperties": {
-							"rootPath": "[concat(variables('blobContainer'), '/scripts')]",
+							"rootPath": "[concat(parameters('blobContainer'), '/scripts')]",
 							"entryFilePath": "[variables('entryFilePath')]",
 							"arguments": [
 								"[parameters('storageAccountName')]",
-								"[parameters('KibanaESDeployedVMIP')]"
+								"[parameters('blobContainer')]"
 							],
-                            "className": "com.neo4j.AzureNeo4J",
 							"sparkJobLinkedService": {
 								"referenceName": "[variables('clientAzureStorageLinkedServiceName')]",
 								"type": "LinkedServiceReference"
