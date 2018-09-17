@@ -335,8 +335,6 @@
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-					"KibanaESDeployedVMIP":{
-						"value":"[reference('KibanaESDeployedVM').outputs.publicIpAddress.value]"},
 					"storageAccountName": {
 						"value": "[parameters('storageAccountName')]"
 					},
