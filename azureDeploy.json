@@ -326,7 +326,7 @@
 			"name": "dataFactory",
 			"apiVersion": "2018-02-01",
 			"dependsOn": [
-				"storageAccount"
+				"KibanaESDeployedVM"
 			],
 			"properties": {
 				"mode": "Incremental",
@@ -505,7 +505,7 @@
 			"name": "azureFunction",
 			"apiVersion": "2018-02-01",
 			"dependsOn": [
-				"EventHubTemplate"
+				"KibanaESDeployedVM"
 			],
 			"properties": {
 				"mode": "Incremental",
@@ -514,6 +514,8 @@
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
+					"KibanaESDeployedVMIP":{
+						"value":"[reference('KibanaESDeployedVM').outputs.publicIpAddress.value]"},
 					"storageAccountName": {
 						"value": "[parameters('storageAccountName')]"
 					},
