@@ -54,7 +54,7 @@
         "raweventGridSubscriptionName":"rawtopicsubscription" ,
 		"publishedeventGridSubscriptionName":"publishedtopicsubscription" ,
 		"transformedeventGridSubscriptionName":"transformedtopicsubscription" ,
-        "eventgridEventHubNamespaceName": "topicEventhubNamespace",
+        "eventgridEventHubNamespaceName": "testingEventhubNamespace",
 		"eventHubResourceGroup": "[resourceGroup().name]",
 		"raweventhub": "rawEventHub",
 		"publisheventhub":"publishedEventHub" ,
