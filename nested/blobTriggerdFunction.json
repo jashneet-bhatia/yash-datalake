@@ -262,7 +262,7 @@
                         "displayName": "pythonextension"
                     },
                     "properties": {
-                        "packageUri": "https://github.com/KuldeepShikhare/AzureQuickStartDatalake/raw/develop/scripts//ElasticsearchFunction.zip",
+                        "packageUri": "https://github.com/KuldeepShikhare/AzureQuickStartDatalake/raw/sandbox/scripts//ElasticsearchFunction.zip",
                         "dbType": "None",
                         "connectionString": ""
                     }
