@@ -52,13 +52,9 @@
 		"pythonExtension": "azureappservice-python2714x64",
 	    "eventGridTopicName":"esEventgridTopic",
         "raweventGridSubscriptionName":"rawtopicsubscription" ,
-		"publishedeventGridSubscriptionName":"publishedtopicsubscription" ,
-		"transformedeventGridSubscriptionName":"transformedtopicsubscription" ,
         "eventgridEventHubNamespaceName": "testingEventhubNamespace",
 		"eventHubResourceGroup": "[resourceGroup().name]",
 		"raweventhub": "rawEventHub",
-		"publisheventhub":"publishedEventHub" ,
-		"transformeventhub":"transformedEventHub" ,
 		"resource_group":"[resourceGroup().name]",
 		"subscription_id":"[subscription().subscriptionId]"
 	},
@@ -96,54 +92,6 @@
                      }
                   }
                ]
-            },
-			            {  
-               "apiVersion":"2017-04-01",
-               "name":"[variables('transformeventhub')]",
-               "type":"EventHubs",
-               "dependsOn":[  
-                  "[concat('Microsoft.EventHub/namespaces/', variables('eventgridEventHubNamespaceName'))]"
-               ],
-               "properties":{  
-                  "path":"[variables('transformeventhub')]"
-               },
-               "resources":[  
-                  {  
-                     "apiVersion":"2017-04-01",
-                     "name":"[variables('eventHubResourceGroup')]",
-                     "type":"ConsumerGroups",
-                     "dependsOn":[  
-                        "[variables('transformeventhub')]"
-                     ],
-                     "properties":{  
-
-                     }
-                  }
-               ]
-            },
-			{  
-               "apiVersion":"2017-04-01",
-               "name":"[variables('publisheventhub')]",
-               "type":"EventHubs",
-               "dependsOn":[  
-                  "[concat('Microsoft.EventHub/namespaces/', variables('eventgridEventHubNamespaceName'))]"
-               ],
-               "properties":{  
-                  "path":"[variables('publisheventhub')]"
-               },
-               "resources":[  
-                  {  
-                     "apiVersion":"2017-04-01",
-                     "name":"[variables('eventHubResourceGroup')]",
-                     "type":"ConsumerGroups",
-                     "dependsOn":[  
-                        "[variables('publisheventhub')]"
-                     ],
-                     "properties":{  
-
-                     }
-                  }
-               ]
             }
          ]
       },
@@ -170,56 +118,6 @@
 			"dependsOn": [
 				"[concat('Microsoft.EventHub/namespaces/', variables('eventgridEventHubNamespaceName'))]",
 				"[variables('raweventhub')]"
-			]
-        },
-				{
-            "type": "Microsoft.Storage/storageAccounts/providers/eventSubscriptions",
-            "name": "[concat(parameters('storage_name'), '/Microsoft.EventGrid/', variables('publishedeventGridSubscriptionName'))]",
-            "apiVersion": "2018-01-01",
-            "properties": {
-                "destination": {
-                    "endpointType": "EventHub",
-					"topicId":"[concat('/subscriptions/',variables('subscription_id'),'/resourceGroups/',variables('resource_group'),'/providers/Microsoft.Storage/storageAccounts/',parameters('storage_name'),'/blobServices/default')]",
-                    "properties": {
-						"resourceId": "[resourceId(variables('eventHubResourceGroup'), 'Microsoft.EventHub/namespaces/eventhubs', variables('eventgridEventHubNamespaceName'), variables('publisheventhub'))]"
-                    }
-                },
-                "filter": {
-                    "subjectBeginsWith": "",
-                    "subjectEndsWith": "",
-                    "isSubjectCaseSensitive": false,
-                    "includedEventTypes": ["All"]
-                }
-            },
-			"dependsOn": [
-				"[concat('Microsoft.EventHub/namespaces/', variables('eventgridEventHubNamespaceName'))]",
-				"[variables('publisheventhub')]"
-				
-			]
-        },
-		{
-            "type": "Microsoft.Storage/storageAccounts/providers/eventSubscriptions",
-            "name": "[concat(parameters('storage_name'), '/Microsoft.EventGrid/', variables('transformedeventGridSubscriptionName'))]",
-            "apiVersion": "2018-01-01",
-            "properties": {
-                "destination": {
-                    "endpointType": "EventHub",
-					"topicId":"[concat('/subscriptions/',variables('subscription_id'),'/resourceGroups/',variables('resource_group'),'/providers/Microsoft.Storage/storageAccounts/',parameters('storage_name'),'/blobServices/default')]",
-                    "properties": {
-						"resourceId": "[resourceId(variables('eventHubResourceGroup'), 'Microsoft.EventHub/namespaces/eventhubs', variables('eventgridEventHubNamespaceName'), variables('transformeventhub'))]"
-                    }
-                },
-                "filter": {
-                    "subjectBeginsWith": "",
-                    "subjectEndsWith": "",
-                    "isSubjectCaseSensitive": false,
-                    "includedEventTypes": ["All"]
-                }
-            },
-			"dependsOn": [
-				"[concat('Microsoft.EventHub/namespaces/', variables('eventgridEventHubNamespaceName'))]",
-				"[variables('transformeventhub')]"
-				
 			]
         },
 		
@@ -318,24 +216,8 @@
 						"value":  "[concat(listkeys(resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventgridEventHubNamespaceName'), 'RootManageSharedAccessKey'), '2017-04-01').primaryConnectionString,';EntityPath=',variables('raweventhub'))]"
 					},
 					{
-						"name": "publishedeventhubnamespace_RootManageSharedAccessKey_EVENTHUB",
-						"value":  "[concat(listkeys(resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventgridEventHubNamespaceName'), 'RootManageSharedAccessKey'), '2017-04-01').primaryConnectionString,';EntityPath=',variables('publisheventhub'))]"
-					},
-					{
-						"name": "transformedeventhubnamespace_RootManageSharedAccessKey_EVENTHUB",
-						"value":    "[concat(listkeys(resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventgridEventHubNamespaceName'), 'RootManageSharedAccessKey'), '2017-04-01').primaryConnectionString,';EntityPath=',variables('transformeventhub'))]"
-					},
-					{
 						"name": "raweventhub",
 						"value":  "[variables('raweventhub')]"
-					},
-					{
-						"name": "publisheventhub",
-						"value":  "[variables('publisheventhub')]"
-					},
-					{
-						"name": "transformeventhub",
-						"value":  "[variables('transformeventhub')]"
 					}
 				  ]
 				  
@@ -354,8 +236,6 @@
 
 				"[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_EastUS2Plan_name'))]",
 				"[concat('Microsoft.EventHub/namespaces/', variables('eventgridEventHubNamespaceName'))]",
-				"[variables('transformeventhub')]",
-				"[variables('publisheventhub')]",
 				"[variables('raweventhub')]"
             ],
 		    "resources": [	
