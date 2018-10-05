@@ -77,7 +77,7 @@
 		},
 		"location": {
 			"type": "string",
-			"defaultValue": "East US 2",
+			"defaultValue": "[resourceGroup().location]",
 			"metadata": {
 				"description": "The location in which the resources will be created."
 			}
