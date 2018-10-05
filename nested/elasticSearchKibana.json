@@ -335,7 +335,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-			"https://raw.githubusercontent.com/KuldeepShikhare/AzureQuickStartDatalake/master/kibana_install_script.sh"
+			"https://raw.githubusercontent.com/KuldeepShikhare/AzureQuickStartDatalake/develop/scripts/kibana_install_script.sh"
           ],
           "commandToExecute": "sh kibana_install_script.sh >> /home/testingDataFileLog.txt"
         }
