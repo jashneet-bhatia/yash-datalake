@@ -54,7 +54,7 @@
   "variables": {
 	"networkSecurityGroupName":"customdatalakeSecurrityGroup",
     "extensionName": "CustomScript",
-    "scenarioPrefix": "customscriptLinux",
+    "scenarioPrefix": "dlelkcompute",
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
     "ubuntuOSVersion": "16.04-LTS",
