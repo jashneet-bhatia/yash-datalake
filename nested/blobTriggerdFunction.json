@@ -49,14 +49,14 @@
 		
     },
     "variables": {
-		"pythonExtension": "azureappservice-python2714x64",
-	    "eventGridTopicName":"dlEventgridTopic",
-        "raweventGridSubscriptionName":"dlrawtopicsubscription" ,
-        "eventgridEventHubNamespaceName": "testingdlNamespace",
-		"eventHubResourceGroup": "[resourceGroup().name]",
-		"raweventhub": "rawdlHub",
-		"resource_group":"[resourceGroup().name]",
-		"subscription_id":"[subscription().subscriptionId]"
+	"pythonExtension": "azureappservice-python2714x64",
+	"eventGridTopicName":"datalakeEventGridTopic",
+        "raweventGridSubscriptionName":"datalakerawtopicsubscription" ,
+        "eventgridEventHubNamespaceName": "datalakeNamespace",
+	"eventHubResourceGroup": "[resourceGroup().name]",
+	"raweventhub": "datalakeESEventHub",
+	"resource_group":"[resourceGroup().name]",
+	"subscription_id":"[subscription().subscriptionId]"
 	},
     "resources": [
 		{  
