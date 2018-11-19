@@ -298,7 +298,6 @@
                 "windowsFxVersion": null,
                 "requestTracingEnabled": false,
                 "remoteDebuggingEnabled": false,
-                "remoteDebuggingVersion": "VS2012",
                 "httpLoggingEnabled": false,
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
