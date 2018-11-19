@@ -49,14 +49,14 @@
 		
     },
     "variables": {
-		"pythonExtension": "azureappservice-python2714x64",
-	    "eventGridTopicName":"ELKTopic",
-        "raweventGridSubscriptionName":"rawtopic" ,
-        "eventgridEventHubNamespaceName": "ELKnamespace",
-		"eventHubResourceGroup": "[resourceGroup().name]",
-		"raweventhub": "rawEvents",
-		"resource_group":"[resourceGroup().name]",
-		"subscription_id":"[subscription().subscriptionId]"
+	"pythonExtension": "azureappservice-python2714x64",
+	"eventGridTopicName":"datalakeEventGridTopic",
+        "raweventGridSubscriptionName":"datalakerawtopicsubscription" ,
+        "eventgridEventHubNamespaceName": "datalakeNamespace",
+	"eventHubResourceGroup": "[resourceGroup().name]",
+	"raweventhub": "datalakeESEventHub",
+	"resource_group":"[resourceGroup().name]",
+	"subscription_id":"[subscription().subscriptionId]"
 	},
     "resources": [
 		{  
@@ -262,7 +262,7 @@
                         "displayName": "pythonextension"
                     },
                     "properties": {
-                        "packageUri": "https://github.com/KuldeepShikhare/AzureQuickStartDatalake/raw/sandbox/scripts//ElasticsearchFunction.zip",
+                        "packageUri": "https://github.com/KuldeepShikhare/AzureQuickStartDatalake/raw/develop/scripts//ElasticsearchFunction.zip",
                         "dbType": "None",
                         "connectionString": ""
                     }
