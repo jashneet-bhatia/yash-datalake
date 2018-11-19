@@ -61,7 +61,9 @@
 		"outputDatasetName": "DatasetOut",
 		"pipeline_name_1": "pipelineForDataMovement",
 		"pipeline_name_2": "pipelineForDataTransformation",
+		"pipeline_name_3": "pipelineForDataTransformation2",
 		"entryFilePath": "Neo4JSparkTransformation-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
+		
 	},
 	"resources": [{
 		"name": "[parameters('dataFactoryName')]",
@@ -119,7 +121,7 @@
 						"clusterType": "spark",
 						"clusterSize": 1,
 						"version": "3.6",
-						"timeToLive": "00:05:00",
+						"timeToLive": "01:35:00",
 						"hostSubscriptionId": "18bc600e-57c7-4ea5-b64a-bb62f1f34d2c",
 						"clusterResourceGroup": "[resourceGroup().name]",
 						"tenant": "[subscription().tenantId]",
@@ -229,6 +231,45 @@
 						},
 						"typeProperties": {
 							"rootPath": "[concat(variables('blobContainer'), '/scripts')]",
+							"entryFilePath": "[variables('entryFilePath')]",
+							"arguments": [
+								"[parameters('storageAccountName')]",
+								"[parameters('KibanaESDeployedVMIP')]"
+							],
+                            "className": "com.neo4j.AzureNeo4J",
+							"sparkJobLinkedService": {
+								"referenceName": "[variables('clientAzureStorageLinkedServiceName')]",
+								"type": "LinkedServiceReference"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "[variables('onDemandHDInsightLinkedServiceName')]",
+							"type": "LinkedServiceReference"
+						}
+					}]
+				}
+			},
+			{
+				"type": "pipelines",
+				"name": "[variables('pipeline_name_3')]",
+				"dependsOn": [
+					"[parameters('dataFactoryName')]",
+					"[variables('clientAzureStorageLinkedServiceName')]",
+					"[variables('onDemandHDInsightLinkedServiceName')]"
+				],
+				"apiVersion": "2017-09-01-preview",
+				"properties": {
+					"activities": [{
+						"name": "MySparkActivity",
+						"type": "HDInsightSpark",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30
+						},
+						"typeProperties": {
+							"rootPath": "[concat(variables('blobContainer'), '/jars')]",
 							"entryFilePath": "[variables('entryFilePath')]",
 							"arguments": [
 								"[parameters('storageAccountName')]",
