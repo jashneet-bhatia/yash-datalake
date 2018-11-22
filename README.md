@@ -34,10 +34,10 @@ The deployment  of Quick start Data lake also includes an optional wizard and a 
 1. Batch Flow - PowerBI Desktop
 2. Streaming Flow - PowerBI Online Account
 --------------------------------------------------------------------------
-The following sections provide steps for running the Quickstart.
+The following section provide steps for running the Quickstart.
 # Run and monitor the deployment:
 After you deploy the template, to run Quickstart, do the following steps:
-1. Go to Output section of ARM template deployment services.
+1. Go to the Output section of ARM template deployment services.
 2. Copy URL from output section.
 3. Open this URL in new tab
 
