@@ -18,8 +18,7 @@ The deployment  of Quick start Data lake also includes an optional wizard and a 
 --------------------------------------------------------------------------
 # Pre-Requisites
 --------------------------------------------------------------------------
-# Application registration in AAD :
---------------------------------------------------------------------------
+- Application registration in AAD :
 1. Service Principal ID
 2. Service Principal Key
 3. Assign required permissions
