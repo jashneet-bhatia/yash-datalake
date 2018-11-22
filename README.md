@@ -28,11 +28,8 @@ The deployment  of Quick start Data lake also includes an optional wizard and a 
 	
 	[Note = your-function-app-name : The function name which you would be giving while deploying Yash Data Lake]
 	
---------------------------------------------------------------------------
-# Visualization :
---------------------------------------------------------------------------
-1. Batch Flow - PowerBI Desktop
-2. Streaming Flow - PowerBI Online Account
+5. Open Elasticsearch function app to load data to Elasticsearch for first time
+	
 --------------------------------------------------------------------------
 The following section provide steps for running the Quickstart.
 # Run and monitor the deployment:
