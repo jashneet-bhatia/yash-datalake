@@ -22,12 +22,10 @@ The deployment  of Quick start Data lake also includes an optional wizard and a 
 	1. Service Principal ID
 	2. Service Principal Key
 	3. Assign required permissions
-	4. Set Reply URL :
-	https://your-function-app-name.azurewebsites.net/.auth/login/aad/callback
+	4. Set Reply URL :https://your-function-app-name.azurewebsites.net/.auth/login/aad/callback
+		[Note = your-function-app-name : The function name which you would be giving while deploying Yash Data Lake]
 	
-	[Note = your-function-app-name : The function name which you would be giving while deploying Yash Data Lake]
-	
-5. Open Elasticsearch function app to load data to Elasticsearch for first time
+	5. Open Elasticsearch function app to load data to Elasticsearch for first time
 	
 --------------------------------------------------------------------------
 The following section provide steps for running the Quickstart.
