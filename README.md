@@ -8,7 +8,7 @@ Yash Data Lake in Azure Cloud provides data ingestion, real-time analytics over 
  The purpose of a Quick start  is to present an unrefined view of data to the analysts, to help them explore their data refinement and analysis techniques using Azure services.
 The deployment  of Quick start Data lake also includes an optional wizard and a sample dataset that is used  to demonstrate data lake capabilities.
 
-
+![alt text](https://raw.githubusercontent.com/KuldeepShikhare/AzureQuickStartDatalake/sandbox/scripts/images/Step_1_Get_Started.JPG)
 
 --------------------------------------------------------------------------
 # Pre-Requisites
