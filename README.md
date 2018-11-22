@@ -4,7 +4,11 @@
 # Overview :
 --------------------------------------------------------------------------
 The aim of Yash Data lake Walk through guide is build to assist  through the Server less Data Lake reference architecture and the Azure Cloud services used within. 
-Yash Data Lake in Azure Cloud provides data ingestion, real-time analytics over continuous stream of data, batch analytics using the data available in the Data Lake, ad-hoc analytics for exploring different data insights and visualization, which can be easily understood .
+-Yash Data Lake in Azure Cloud provides following features
+*data ingestion, 
+*real-time analytics over continuous stream of data
+*batch analytics using the data available in the Data Lake, 
+*ad-hoc analytics for exploring different data insights and visualization
  The purpose of a Quick start  is to present an unrefined view of data to the analysts, to help them explore their data refinement and analysis techniques using Azure services.
 The deployment  of Quick start Data lake also includes an optional wizard and a sample dataset that is used  to demonstrate data lake capabilities.
 
