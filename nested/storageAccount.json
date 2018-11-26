@@ -32,7 +32,9 @@
 			"name": "[parameters('storageAccountType')]"
 		},
 		"kind": "StorageV2",
-		"properties": {}
+		"properties": {
+		"accessTier": "Cool"
+		}
 	}],
 	"outputs": {
 	"clientAzureStorageConnectionString": {
