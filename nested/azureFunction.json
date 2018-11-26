@@ -276,7 +276,7 @@
 						"displayName": "pythonextension"
 					},
 					"properties": {
-						"packageUri": "https://github.com/KuldeepShikhare/AzureQuickStartDatalake/raw/sandbox/scripts/quickstart_function_app.zip",
+						"packageUri": "https://github.com/KuldeepShikhare/AzureQuickStartDatalake/raw/master/scripts/quickstart_function_app.zip",
 						"dbType": "None",
 						"connectionString": ""
 					}
