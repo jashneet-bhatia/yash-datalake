@@ -14,7 +14,7 @@ The aim of Yash Azure Quick start solution is to showcase the capabilities of Se
 <br />
 The deployment  of Quick start Data lake also includes an optional wizard and a sample dataset that is used  to demonstrate data lake capabilities.
 
-![alt text](https://raw.githubusercontent.com/KuldeepShikhare/AzureQuickStartDatalake/sandbox/scripts/images/Step_1_Get_Started.JPG)
+![alt text](https://raw.githubusercontent.com/KuldeepShikhare/AzureQuickStartDatalake/master/scripts/images/Untitled.png)
 
 --------------------------------------------------------------------------
 # Pre-Requisites
