@@ -5,13 +5,13 @@
 --------------------------------------------------------------------------
 The aim of Yash Azure Quick start solution is to showcase the capabilities of Server less Data Lake in the Azure Cloud. 
 - Yash Data Lake in Azure Cloud showcases features such as
-	* data ingestion
-	* real-time analytics over continuous stream of data
-	* batch analytics using the data available in the Data Lake
-	* ad-hoc analytics for exploring different data insights and visualization 
-	* data governanace 
+	* Data ingestion
+	* Real-time analytics over continuous stream of data
+	* Batch analytics using the data available in the Data Lake
+	* Ad-Hoc analytics for exploring different data insights and visualization 
+	* Data governanace 
+	
 <br />
-The purpose of a Quick start  is to present an unrefined view of data to the analysts, to help them explore their data refinement and analysis techniques using Azure services.
 The deployment  of Quick start Data lake also includes an optional wizard and a sample dataset that is used  to demonstrate data lake capabilities.
 
 ![alt text](https://raw.githubusercontent.com/KuldeepShikhare/AzureQuickStartDatalake/sandbox/scripts/images/Step_1_Get_Started.JPG)
