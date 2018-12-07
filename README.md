@@ -11,7 +11,7 @@ The aim of Yash Azure Quick start solution is to showcase the capabilities of Se
 	* Data Processing
 		* Batch 
 		* Real Time 
-	* Data governance
+	* Data Governance
 		* Meta data management
 		* Data Lineage
 		* Data Security
