@@ -5,11 +5,17 @@
 --------------------------------------------------------------------------
 The aim of Yash Azure Quick start solution is to showcase the capabilities of Server less Data Lake in the Azure Cloud. 
 - Yash Data Lake in Azure Cloud showcases features such as
-	* Data ingestion
-	* Real-time analytics over continuous stream of data
-	* Batch analytics using the data available in the Data Lake
-	* Ad-Hoc analytics for exploring different data insights and visualization 
-	* Data governanace 
+	* Data Ingestion
+		* Batch 
+		* Streaming 
+	* Data Processing
+		* Batch 
+		* Real Time 
+	* Data Governance
+		* Meta data management
+		* Data Lineage
+		* Data Security
+	* Ad-Hoc analytics for exploring different data insights and visualization
 	
 <br />
 The deployment  of Quick start Data lake also includes an optional wizard and a sample dataset that is used  to demonstrate data lake capabilities.
