@@ -33,7 +33,7 @@
 		},
 		"kind": "StorageV2",
 		"properties": {
-		"accessTier": "Cool"
+			"accessTier": "Cool"
 		}
 	}],
 	"outputs": {
