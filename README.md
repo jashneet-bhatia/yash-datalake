@@ -24,11 +24,9 @@ The deployment  of Quick start Data lake also includes an optional wizard and a 
 --------------------------------------------------------------------------
 # Pre-Requisites
 --------------------------------------------------------------------------
-- Application registration in AAD :
-	1. Service Principal
-	2. App Secret Key
-	3. Assign required permissions
-	4. Set Reply URL :https://your-function-app-name.azurewebsites.net/.auth/login/aad/callback
+- Register application in AAD with following specifications and note down the application id and app secret key: 
+	1. Assign required permissions
+	2. Set Reply URL :https://your-function-app-name.azurewebsites.net/.auth/login/aad/callback
 		[Note = your-function-app-name : The function name which you would be giving while deploying Yash Data Lake]
 - Add following permissions to Application registered in AAD :
 	1. Azure Analysis Services
