@@ -50,7 +50,7 @@ After you deploy the template, to run Quickstart, do the following steps:
 2. Copy URL from output section.
 3. Open this URL in new tab
 4. Check app service plan in that resource group.
-5. dd Application and user in IAM of ADL store and in data explorer access.
+5. Add Application and user in IAM of ADL store and in data explorer access.
 6. Add application and user in IAM of Azure Data Factory.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FKuldeepShikhare%2FAzureQuickStartDatalake%2Fmaster%2FazureDeploy.json" target="_blank">
