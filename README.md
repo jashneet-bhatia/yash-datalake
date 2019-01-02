@@ -46,10 +46,10 @@ The deployment  of Quick start Data lake also includes an optional wizard and a 
 The following section provide steps for running the Quickstart.
 # Run and monitor the deployment:
 After you deploy the template, to run Quickstart, do the following steps:
-1. Go to the Output section of ARM template deployment services.
-2. Copy URL from output section.
-3. Open this URL in new tab
-4. After following above steps,
+- Go to the Output section of ARM template deployment services.
+- Copy URL from output section.
+- Open this URL in new tab
+- After following above steps,
 	i.  Add Application and user in IAM of ADL store and in data explorer access.
 	ii. Add application and user in IAM of Azure Data Factory.
 After completing the above procedure return to the tab and follow the quickstart guide
