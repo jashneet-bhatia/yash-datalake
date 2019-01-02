@@ -50,7 +50,7 @@ After you deploy the template, to run Quickstart, do the following steps:
 2. Copy URL from output section.
 3. Open this URL in new tab
 4. After following above steps,
-	i. Add Application and user in IAM of ADL store and in data explorer access.
+	i.  Add Application and user in IAM of ADL store and in data explorer access.
 	ii. Add application and user in IAM of Azure Data Factory.
 After completing the above procedure return to the tab and follow the quickstart guide
 
