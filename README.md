@@ -37,6 +37,8 @@ The deployment  of Quick start Data lake also includes an optional wizard and a 
 - Check services used in Quick start Data lake are available in that region.Also check whether resources are registered in that region for that subscription.
 
 - User of Quick start Data lake must be owner for existing resource group or admin of  newly created resource group used at the time of deployment of ARM template.
+
+- Add Application in IAM of subscription.
 	
 - Open Elasticsearch function app to load data to Elasticsearch for first time
 	
@@ -47,6 +49,9 @@ After you deploy the template, to run Quickstart, do the following steps:
 1. Go to the Output section of ARM template deployment services.
 2. Copy URL from output section.
 3. Open this URL in new tab
+4.Check app service plan in that resource group.
+5.Add Application and user in IAM of ADL store and in data explorer access.
+6.Add application and user in IAM of Azure Data Factory.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FKuldeepShikhare%2FAzureQuickStartDatalake%2Fmaster%2FazureDeploy.json" target="_blank">
 <img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/>
