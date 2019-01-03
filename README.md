@@ -19,7 +19,7 @@ The aim of Yash Azure Quick start solution is to showcase the capabilities of Se
 <br />
 The deployment  of Quick start Data lake also includes an optional wizard and a sample dataset that is used  to demonstrate data lake capabilities.
 
-![alt text](https://raw.githubusercontent.com/KuldeepShikhare/AzureQuickStartDatalake/master/scripts/images/Architecture.png)
+![alt text](https://raw.githubusercontent.com/ajos1993/YASH-Azure-DataLake-Quickstart/master/scripts/images/Architecture.png)
 
 --------------------------------------------------------------------------
 # Pre-Requisites
@@ -53,6 +53,6 @@ After you deploy the template, to run Quickstart, do the following steps:
 - After completing the above procedure return to the tab and follow the quickstart guide
 
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FKuldeepShikhare%2FAzureQuickStartDatalake%2Fmaster%2FazureDeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fajos1993%2FYASH-Azure-DataLake-Quickstart%2Fmaster%2FazureDeploy.json" target="_blank">
 <img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/>
 </a>
