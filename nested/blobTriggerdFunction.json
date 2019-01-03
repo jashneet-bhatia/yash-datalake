@@ -262,7 +262,7 @@
                         "displayName": "pythonextension"
                     },
                     "properties": {
-                        "packageUri": "https://github.com/ajos1993/YASH-Azure-DataLake-Quickstart/raw/sandbox/scripts//ElasticsearchFunction.zip",
+                        "packageUri": "https://github.com/ajos1993/YASH-Azure-DataLake-Quickstart/raw/sandbox/scripts/elasticsearchfunction.zip",
                         "dbType": "None",
                         "connectionString": ""
                     }
