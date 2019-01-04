@@ -2,38 +2,14 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "storageAccountName": {
-      "value": "datalakeresources"
-    },
-    "storageAccountType": {
-      "value": "Standard_LRS"
-    },
-    "dataFactoryName": {
-      "value": "datalakedf"
+    "blobContainer": {
+      "value": "raw"
     },
     "dataFactoryLocation": {
       "value": "East US 2"
     },
-    "blobContainer": {
-      "value": "raw"
-    },
-    "servicePrincipalId": {
-      "value": "**********************"
-    },
-    "servicePrincipalKey": {
-      "value": "*********************"
-    },
-    "adlAnalyticsName": {
-      "value": "datalakeadla"
-    },
-    "adlStoreName": {
-      "value": "datalakeadls"
-    },
-    "location": {
+	"location": {
       "value": "East US 2"
-    },
-    "eventHubNamespaceName": {
-      "value": "datalakeehnamespace"
     },
     "eventhubSku": {
       "value": "Standard"
@@ -47,71 +23,14 @@
     "maximumThroughputUnits": {
       "value": 2
     },
-    "DataCleaningInputStream": {
-      "value": "raworderstream"
-    },
-    "DataCleaningOutputStream": {
-      "value": "cleanedorderstream"
-    },
     "messageRetentionInDays": {
       "value": 1
     },
     "partitionCount": {
       "value": 2
     },
-    "captureEnabled": {
-      "value": "true"
-    },
-    "captureEncodingFormat": {
-      "value": "Avro"
-    },
-    "captureTime": {
-      "value": 300
-    },
-    "captureSize": {
-      "value": 10485760
-    },
     "captureNameFormat": {
       "value": "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}"
-    },
-    "DataCleaningStreamAnalyticsJob": {
-      "value": "cleanOrdersStreamAnalyticsJob"
-    },
-    "DataAggregatorStreamAnalyticsJob1": {
-      "value": "sellingProductPerMinJob"
-    },
-    "DataAggregatorStreamAnalyticsJob2": {
-      "value": "geoLocationsJob"
-    },
-    "DataAggregatorStreamAnalyticsJob3": {
-      "value": "ageGroupWiseRevenueJob"
-    },
-    "appName": {
-      "value": "datalakewizard"
-    },
-    "vmSize": {
-      "value": "Standard_D1_v2"
-    },
-    "vm_username": {
-      "value": "yash"
-    },
-    "vm_password": {
-      "value": "Yash@1234567"
-    },
-    "dnsLabelPrefix": {
-      "value": "[concat('datalake',uniquestring(resourceGroup().id,deployment().name))]"
-    },
-    "ES_Function_name": {
-      "value": "demotriggerappESFunction1234"
-    },
-    "serverfarms_EastUS2Plan_name": {
-      "value": "EastUS2Plan"
-    },
-    "config_web_name_4": {
-      "value": "web"
-    },
-    "hostnamebinding": {
-      "value": "demotriggerappESFunction1234.azurewebsites.net"
     }
   }
 }
