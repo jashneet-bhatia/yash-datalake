@@ -8,6 +8,7 @@
                 "Yes",
                 "No"
             ],
+			"defaultValue": "Yes",
             "metadata": {
                 "description": "Select whether the VM should be in production or not."
             }
@@ -16,7 +17,8 @@
 			"type": "string",
 			"metadata": {
 				"description": "Unique Storage Account Name"
-			}
+			},
+			"defaultValue": "datalakedemowithes"
 		},
 		"storageAccountType": {
 			"type": "string",
@@ -31,11 +33,19 @@
 				"description": "Storage Account type"
 			}
 		},
+		"blobContainer": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the blob container in the Azure Storage account."
+			},
+			"defaultValue": "raw"
+		},
 		"dataFactoryName": {
 			"type": "string",
 			"metadata": {
 				"description": "Name of the data factory. Must be globally unique."
-			}
+			},
+			"defaultValue": "datalakedemodf"
 		},
 		"dataFactoryLocation": {
 			"type": "string",
@@ -43,12 +53,6 @@
 			"defaultValue": "East US 2",
 			"metadata": {
 				"description": "Location of the data factory. Currently, only East US and East US 2 are supported. "
-			}
-		},
-		"blobContainer": {
-			"type": "string",
-			"metadata": {
-				"description": "Name of the blob container in the Azure Storage account."
 			}
 		},
 		"servicePrincipalId": {
@@ -67,13 +71,15 @@
 			"type": "string",
 			"metadata": {
 				"description": "The name of the Data Lake Analytics account to create."
-			}
+			},
+			"defaultValue": "datalakedemoadla"
 		},
 		"adlStoreName": {
 			"type": "string",
 			"metadata": {
 				"description": "The name of the Data Lake Store account to create."
-			}
+			},
+			"defaultValue": "datalakedemoadlstore"
 		},
 		"location": {
 			"type": "string",
@@ -86,7 +92,8 @@
 			"type": "string",
 			"metadata": {
 				"description": "Name of the EventHub namespace"
-			}
+			},
+			"defaultValue": "datalakedemoeventnm"
 		},
 		"eventhubSku": {
 			"type": "string",
@@ -113,7 +120,7 @@
 		},
 		"isAutoInflateEnabled": {
 			"type": "string",
-			"defaultValue": "False",
+			"defaultValue": "True",
 			"allowedValues": [
 				"True",
 				"False"
@@ -124,7 +131,7 @@
 		},
 		"maximumThroughputUnits": {
 			"type": "int",
-			"defaultValue": 0,
+			"defaultValue": 2,
 			"minValue": 0,
 			"maxValue": 20,
 			"metadata": {
@@ -135,13 +142,15 @@
 			"type": "string",
 			"metadata": {
 				"description": "Name of the Event Hub"
-			}
+			},
+			"defaultValue": "datalakerawstream"
 		},
 		"DataCleaningOutputStream": {
 			"type": "string",
 			"metadata": {
 				"description": "Name of the second Event Hub"
-			}
+			},
+			"defaultValue": "datalakecleanstream"
 		},
 		"messageRetentionInDays": {
 			"type": "int",
@@ -246,7 +255,8 @@
 			"type": "string",
 			"metadata": {
 				"description": "Name of the Event Hub"
-			}
+			},
+			"defaultValue": "azuredatalakeuiapp"
 		},
 		"vmSize": {
 			"type": "string",
@@ -262,19 +272,22 @@
 			],
 			"metadata": {
 				"description": "Size of vm"
-			}
+			},
+			"defaultValue": "Standard_D1_v2"
 		},
 		"vm_username": {
 			"type": "string",
 			"metadata": {
 				"description": "Username for the Virtual Machine."
-			}
+			},
+			"defaultValue": "datalake"
 		},
 		"vm_password": {
 			"type": "securestring",
 			"metadata": {
 				"description": "Password for the Virtual Machine."
-			}
+			},
+			"defaultValue": "Demo@1234567"
 		},
 		"dnsLabelPrefix": {
 			"type": "string",
