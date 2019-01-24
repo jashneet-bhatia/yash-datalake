@@ -72,14 +72,14 @@
 			"metadata": {
 				"description": "The name of the Data Lake Analytics account to create."
 			},
-			"defaultValue": "datalakedemoadla"
+			"defaultValue": "datalakeadla"
 		},
 		"adlStoreName": {
 			"type": "string",
 			"metadata": {
 				"description": "The name of the Data Lake Store account to create."
 			},
-			"defaultValue": "datalakedemoadlstore"
+			"defaultValue": "datalakeadlstore"
 		},
 		"location": {
 			"type": "string",
