@@ -50,11 +50,11 @@
     },
     "variables": {
 	"pythonExtension": "azureappservice-python2714x64",
-	"eventGridTopicName":"EventGridTopic",
-        "raweventGridSubscriptionName":"rawtopicsubscription" ,
-        "eventgridEventHubNamespaceName": "datalakeNamespace",
+	"eventGridTopicName":"EventGridTopic1",
+        "raweventGridSubscriptionName":"rawtopicsubscription1" ,
+        "eventgridEventHubNamespaceName": "datalakeNamespace1",
 	"eventHubResourceGroup": "[resourceGroup().name]",
-	"raweventhub": "datalakeeseventhub",
+	"raweventhub": "datalakeeseventhub1",
 	"resource_group":"[resourceGroup().name]",
 	"subscription_id":"[subscription().subscriptionId]"
 	},
