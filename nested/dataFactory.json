@@ -239,7 +239,7 @@
                   "retryIntervalInSeconds": 30
                 },
                 "typeProperties": {
-                  "rootPath": "[concat(variables('blobContainer'), '/scripts')]",
+                  "rootPath": "[concat(parameters('blobContainer'), '/scripts')]",
                   "entryFilePath": "[variables('entryFilePath')]",
                   "arguments": [
                     "[parameters('storageAccountName')]",
@@ -280,7 +280,7 @@
                   "retryIntervalInSeconds": 30
                 },
                 "typeProperties": {
-                  "rootPath": "[concat(variables('blobContainer'), '/jars')]",
+                  "rootPath": "[concat(parameters('blobContainer'), '/jars')]",
                   "entryFilePath": "[variables('entryFilePath')]",
                   "arguments": [
                     "[parameters('storageAccountName')]",
