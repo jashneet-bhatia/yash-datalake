@@ -123,8 +123,7 @@
       }
     },
     "captureEnabled": {
-      "type": "boolean",
-      "defaultValue": "true",
+      "type": "string",
       "allowedValues": [
         "false",
         "true"
