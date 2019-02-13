@@ -2,12 +2,12 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-	"storageAccountName": {
-			"type": "string",
-			"metadata": {
-				"description": "Unique Storage Account Name"
-			}
-	},
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique Storage Account Name"
+      }
+    },
     "vmSize": {
       "type": "string",
       "allowedValues": [
@@ -40,8 +40,7 @@
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-      },
-	  "defaultValue": "[concat('datalake',uniquestring(resourceGroup().id,deployment().name))]"
+      }
     },
     "location": {
       "type": "string",
@@ -52,7 +51,9 @@
     }
   },
   "variables": {
-	"networkSecurityGroupName":"customdatalakeSecurrityGroup",
+    "_artifactsLocation": "https://raw.githubusercontent.com/ajos1993/yash-datalake/master/",
+    "_artifactsLocationSasToken": "",
+    "networkSecurityGroupName": "customdatalakeSecurrityGroup",
     "extensionName": "CustomScript",
     "scenarioPrefix": "customscriptLinux",
     "imagePublisher": "Canonical",
@@ -68,13 +69,15 @@
     "vmStorageAccountContainerName": "vhds",
     "vmName": "[concat(variables('scenarioPrefix'),'VM')]",
     "virtualNetworkName": "[concat(variables('scenarioPrefix'),'Vnet')]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+    "scriptFolder": "scripts",
+    "scriptFilename": "kibana_install_script.sh"
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
+      "apiVersion": "2018-11-01",
       "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
@@ -84,7 +87,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2018-11-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[parameters('location')]",
@@ -105,7 +108,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2018-11-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
       "location": "[parameters('location')]",
@@ -128,13 +131,13 @@
             }
           }
         ],
-		"networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-          }
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+        }
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2018-10-01",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "location": "[parameters('location')]",
@@ -175,155 +178,155 @@
         }
       }
     },
-	{
-            "name":"[variables('networkSecurityGroupName')]",
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2018-01-01",
-            "location": "[parameters('location')]",
+    {
+      "name": "[variables('networkSecurityGroupName')]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2018-11-01",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "default-allow-ssh",
             "properties": {
-                "securityRules": [
-                    {
-                        "name": "default-allow-ssh",
-                        "properties": {
-                            "priority": 1000,
-                            "protocol": "TCP",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "22"
-                        }
-                    },
-					{
-                        "name": "elasticsearch-inbound-access",
-                        "properties": {
-                            "priority": 1020,
-                            "protocol": "TCP",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "9200-9300"
-                        }
-                    },
-					{
-                        "name": "kibana-inbound-access",
-                        "properties": {
-                            "priority": 1015,
-                            "protocol": "*",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "5601"
-                        }
-                    },
-                    {
-                        "name": "elasticsearch-outbound-access",
-                        "properties": {
-                            "priority": 110,
-                            "protocol": "TCP",
-                            "access": "Allow",
-                            "direction": "Outbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "9200-9300"
-                        }
-                    },
-					{
-                        "name": "kibana-outbound-access",
-                        "properties": {
-                            "priority": 105,
-                            "protocol": "*",
-                            "access": "Allow",
-                            "direction": "Outbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "5601"
-                        }
-                    },
-					{
-                        "name": "neo4j-inbound-access",
-                        "properties": {
-                            "priority": 1030,
-                            "protocol": "*",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "7474"
-                        }
-                    },
-					{
-                        "name": "neo4j-outbound-access",
-                        "properties": {
-                            "priority": 120,
-                            "protocol": "*",
-                            "access": "Allow",
-                            "direction": "Outbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "7474"
-                        }
-                    },
-					{
-                        "name": "neo4j-bolt-inbound-access",
-                        "properties": {
-                            "priority": 1040,
-                            "protocol": "*",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "7687"
-                        }
-                    },
-					{
-                        "name": "neo4j-bolt-outbound-access",
-                        "properties": {
-                            "priority": 130,
-                            "protocol": "*",
-                            "access": "Allow",
-                            "direction": "Outbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "7687"
-                        }
-                    }
-                ]
+              "priority": 1000,
+              "protocol": "TCP",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "22"
             }
+          },
+          {
+            "name": "elasticsearch-inbound-access",
+            "properties": {
+              "priority": 1020,
+              "protocol": "TCP",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "9200-9300"
+            }
+          },
+          {
+            "name": "kibana-inbound-access",
+            "properties": {
+              "priority": 1015,
+              "protocol": "*",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "5601"
+            }
+          },
+          {
+            "name": "elasticsearch-outbound-access",
+            "properties": {
+              "priority": 110,
+              "protocol": "TCP",
+              "access": "Allow",
+              "direction": "Outbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "9200-9300"
+            }
+          },
+          {
+            "name": "kibana-outbound-access",
+            "properties": {
+              "priority": 105,
+              "protocol": "*",
+              "access": "Allow",
+              "direction": "Outbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "5601"
+            }
+          },
+          {
+            "name": "neo4j-inbound-access",
+            "properties": {
+              "priority": 1030,
+              "protocol": "*",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "7474"
+            }
+          },
+          {
+            "name": "neo4j-outbound-access",
+            "properties": {
+              "priority": 120,
+              "protocol": "*",
+              "access": "Allow",
+              "direction": "Outbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "7474"
+            }
+          },
+          {
+            "name": "neo4j-bolt-inbound-access",
+            "properties": {
+              "priority": 1040,
+              "protocol": "*",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "7687"
+            }
+          },
+          {
+            "name": "neo4j-bolt-outbound-access",
+            "properties": {
+              "priority": 130,
+              "protocol": "*",
+              "access": "Allow",
+              "direction": "Outbound",
+              "sourceApplicationSecurityGroups": [],
+              "destinationApplicationSecurityGroups": [],
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "7687"
+            }
+          }
+        ]
+      }
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'),'/', variables('extensionName'))]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2018-10-01",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
@@ -335,18 +338,17 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-			"https://raw.githubusercontent.com/ajos1993/yash-datalake/master/scripts/kibana_install_script.sh"
+            "[uri(variables('_artifactsLocation'),concat(variables('scriptFolder'),'/',variables('scriptFilename'), variables('_artifactsLocationSasToken')))]"
           ],
-          "commandToExecute": "sh kibana_install_script.sh >> /home/testingDataFileLog.txt"
+          "commandToExecute": "[concat('sh ', variables('scriptFilename'),' >> ','/home/testingDataFileLog.txt')]"
         }
       }
     }
-
   ],
   "outputs": {
     "publicIpAddress": {
-            "type": "string",
-            "value": "[reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName')), '2016-03-30').dnsSettings.fqdn]"
-        }
-	}
+      "type": "string",
+      "value": "[reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName')), '2018-11-01').dnsSettings.fqdn]"
+    }
+  }
 }
