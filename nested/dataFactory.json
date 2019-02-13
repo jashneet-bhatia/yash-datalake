@@ -54,7 +54,6 @@
   "variables": {
     "_artifactsLocation": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource",
     "_artifactsLocationSasToken": "?sv=2017-11-09&sr=c&sig=qoJfA%2BX7K7YdOAjqZFFfuv4C8MVbbQkeBhugnG7DoKk%3D&se=2023-06-20T10%3A55%3A45Z&sp=rl",
-    "blobContainer": "raw",
     "yashAzureStorageLinkedServiceName": "LinkedServiceToYashAzureStorage",
     "SASUri": "https://yashinnovationstorage.blob.core.windows.net/yash-datalake-resource?sv=2017-11-09&sr=c&sig=qoJfA%2BX7K7YdOAjqZFFfuv4C8MVbbQkeBhugnG7DoKk%3D&se=2023-06-20T10%3A55%3A45Z&sp=rl",
     "clientAzureStorageLinkedServiceName": "LinkedServiceToClientAzureStorage",
@@ -171,7 +170,7 @@
           "properties": {
             "type": "AzureBlob",
             "typeProperties": {
-              "folderPath": "[variables('blobContainer')]"
+              "folderPath": "[parameters('blobContainer')]"
             },
             "linkedServiceName": {
               "referenceName": "[variables('clientAzureStorageLinkedServiceName')]",
@@ -180,6 +179,7 @@
           }
         },
         {
+          
           "type": "pipelines",
           "name": "[variables('pipeline_name_1')]",
           "dependsOn": [
