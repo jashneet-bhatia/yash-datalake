@@ -263,7 +263,7 @@
             "value": "[parameters('dataFactoryLocation')]"
           },
           "blobContainer": {
-            "value": "[parameters('blobContainer')]"
+            "value": "[variables('blobContainer')]"
           },
           "clientAzureStorageConnectionString": {
             "value": "[reference('storageAccount').outputs.clientAzureStorageConnectionString.value]"
