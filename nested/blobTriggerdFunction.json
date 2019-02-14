@@ -143,18 +143,6 @@
             "location":"[parameters('location')]",
             "properties":{
                 "enabled":true,
-                "hostNameSslStates":[
-                    {
-                        "name":"[reference(resourceId('Microsoft.Web/Sites',parameters('sites_demotriggerapp1234_name'))).hostNames[0]]",
-                        "sslState":"Disabled",
-                        "hostType":"Standard"
-                    },
-                    {
-                        "name":"[reference(resourceId('Microsoft.Web/Sites',parameters('sites_demotriggerapp1234_name'))).enabledHostNames[1]]",
-                        "sslState":"Disabled",
-                        "hostType":"Repository"
-                    }
-                ],
                 "serverFarmId":"[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_EastUS2Plan_name'))]",
                 "siteConfig":{
                     "handlerMappings":[
