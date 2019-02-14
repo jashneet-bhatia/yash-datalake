@@ -555,9 +555,6 @@
           },
           "config_web_name_4": {
             "value": "[variables('config_web_name_4')]"
-          },
-          "hostnamebinding": {
-            "value": "[parameters('hostnamebinding')]"
           }
         }
       }
