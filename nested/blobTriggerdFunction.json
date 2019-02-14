@@ -18,21 +18,21 @@
         "sites_demotriggerapp1234_name": {            
             "type": "String"
         },
-		"location": {
-		  "type": "string",
-		  "defaultValue": "[resourceGroup().location]",
-		  "metadata": {
+	"location": {
+	    "type": "string",
+		"metadata": {
 			"description": "Location for all resources."
 		  }
-		},
+	},
 		"config_web_name_4": {
             "type": "String"
         },
-		"storage_name":{
-			"type": "string"},
-		"storageConnectionString":{
+	"storage_name":{
+			"type": "string"
+	},
+	"storageConnectionString":{
 			 "type": "String"
-		}
+	}
     },
     "variables":{
         "pythonExtension":"azureappservice-python2714x64",
