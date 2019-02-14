@@ -204,7 +204,7 @@
 
                     },
                     "dependsOn":[
-                        "[resourceId('Microsoft.Web/sites',variables('sites_demotriggerapp1234_name'))]"
+                        "[resourceId('Microsoft.Web/sites',parameters('sites_demotriggerapp1234_name'))]"
                     ]
                 },
                 {
@@ -213,7 +213,7 @@
                     "location":"[parameters('location')]",
                     "apiVersion":"2018-02-01",
                     "dependsOn":[
-                        "[concat('Microsoft.Web/sites/', variables('sites_demotriggerapp1234_name'))]",
+                        "[concat('Microsoft.Web/sites/', parameters('sites_demotriggerapp1234_name'))]",
                         "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_EastUS2Plan_name'))]",
                         "[resourceId('Microsoft.Web/sites/siteextensions', variables('sites_demotriggerapp1234_name'), variables('pythonExtension'))]"
                     ],
@@ -230,7 +230,7 @@
         },
         {
             "type":"Microsoft.Web/sites/config",
-            "name":"[concat(variables('sites_demotriggerapp1234_name'), '/', parameters('config_web_name_4'))]",
+            "name":"[concat(parameters('sites_demotriggerapp1234_name'), '/', parameters('config_web_name_4'))]",
             "apiVersion":"2018-02-01",
             "location":"[parameters('location')]",
             "properties":{
@@ -300,9 +300,9 @@
                 }
             },
             "dependsOn":[
-                "[resourceId('Microsoft.Web/sites', variables('sites_demotriggerapp1234_name'))]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_demotriggerapp1234_name'))]",
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_EastUS2Plan_name'))]",
-                "[concat('Microsoft.Web/sites/',variables('sites_demotriggerapp1234_name'),'/Extensions/MSDeploy')]"
+                "[concat('Microsoft.Web/sites/',parameters('sites_demotriggerapp1234_name'),'/Extensions/MSDeploy')]"
             ]
         }
     ]
