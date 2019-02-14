@@ -44,7 +44,6 @@
         "resource_group":"[resourceGroup().name]",
         "subscription_id":"[subscription().subscriptionId]",
         "_artifactsLocation":"https://github.com/ajos1993/yash-datalake/raw/master/",
-		"hostnamebinding":"demotriggerapp1234.azurewebsites.net",
         "_artifactsLocationSasToken":""
     },
     "resources":[
