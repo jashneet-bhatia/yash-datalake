@@ -142,7 +142,7 @@
             "location":"[parameters('location')]",
             "properties":{
                 "enabled":true,
-                "serverFarmId":"[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_EastUS2Plan_name'))]",
+                "serverFarmId":"[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_EastUS2Plan_name'))]",
                 "siteConfig":{
                     "handlerMappings":[
                         {
@@ -191,7 +191,7 @@
                 "dailyMemoryTimeQuota":0
             },
             "dependsOn":[
-                "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_EastUS2Plan_name'))]",
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_EastUS2Plan_name'))]",
                 "[concat('Microsoft.EventHub/namespaces/', variables('eventgridEventHubNamespaceName'))]",
                 "[variables('raweventhub')]"
             ],
@@ -214,7 +214,7 @@
                     "apiVersion":"2018-02-01",
                     "dependsOn":[
                         "[concat('Microsoft.Web/sites/', variables('sites_demotriggerapp1234_name'))]",
-                        "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_EastUS2Plan_name'))]",
+                        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_EastUS2Plan_name'))]",
                         "[resourceId('Microsoft.Web/sites/siteextensions', variables('sites_demotriggerapp1234_name'), variables('pythonExtension'))]"
                     ],
                     "tags":{
@@ -301,7 +301,7 @@
             },
             "dependsOn":[
                 "[resourceId('Microsoft.Web/sites', variables('sites_demotriggerapp1234_name'))]",
-                "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_EastUS2Plan_name'))]",
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_EastUS2Plan_name'))]",
                 "[concat('Microsoft.Web/sites/',variables('sites_demotriggerapp1234_name'),'/Extensions/MSDeploy')]"
             ]
         }
