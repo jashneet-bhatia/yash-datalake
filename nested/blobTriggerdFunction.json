@@ -215,7 +215,7 @@
                     "dependsOn":[
                         "[concat('Microsoft.Web/sites/', parameters('sites_demotriggerapp1234_name'))]",
                         "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_EastUS2Plan_name'))]",
-                        "[resourceId('Microsoft.Web/sites/siteextensions', variables('sites_demotriggerapp1234_name'), variables('pythonExtension'))]"
+                        "[resourceId('Microsoft.Web/sites/siteextensions', parameters('sites_demotriggerapp1234_name'), variables('pythonExtension'))]"
                     ],
                     "tags":{
                         "displayName":"pythonextension"
