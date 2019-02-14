@@ -139,18 +139,6 @@
       ],
       "properties": {
         "enabled": true,
-        "hostNameSslStates": [
-          {
-            "name": "[reference(resourceId('Microsoft.Web/Sites',parameters('appName'))).hostNames[0]]",
-            "sslState": "Disabled",
-            "hostType": "Standard"
-          },
-          {
-            "name": "[reference(resourceId('Microsoft.Web/Sites',parameters('appName'))).enabledHostNames[1]]",
-            "sslState": "Disabled",
-            "hostType": "Repository"
-          }
-        ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "siteConfig": {
           "handlerMappings": [
