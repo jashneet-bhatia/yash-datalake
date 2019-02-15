@@ -6,15 +6,13 @@
       "type": "string",
       "metadata": {
         "description": "The name of the Data Lake Analytics account to create."
-      },
-      "defaultValue": "datalakedemoadla"
+      }
     },
     "adlStoreName": {
       "type": "string",
       "metadata": {
         "description": "The name of the Data Lake Store account to create."
-      },
-      "defaultValue": "datalakedemoadlstore"
+      }
     },
     "location": {
       "type": "string",
@@ -76,7 +74,6 @@
         "Basic",
         "Standard"
       ],
-      "defaultValue": "Standard",
       "metadata": {
         "description": "The messaging tier for service Bus namespace"
       }
@@ -88,14 +85,12 @@
         2,
         4
       ],
-      "defaultValue": 1,
       "metadata": {
         "description": "MessagingUnits for premium namespace"
       }
     },
     "isAutoInflateEnabled": {
       "type": "string",
-      "defaultValue": "True",
       "allowedValues": [
         "True",
         "False"
@@ -106,7 +101,6 @@
     },
     "messageRetentionInDays": {
       "type": "int",
-      "defaultValue": 1,
       "minValue": 1,
       "maxValue": 7,
       "metadata": {
@@ -115,7 +109,6 @@
     },
     "partitionCount": {
       "type": "int",
-      "defaultValue": 2,
       "minValue": 2,
       "maxValue": 32,
       "metadata": {
@@ -134,7 +127,6 @@
     },
     "captureEncodingFormat": {
       "type": "string",
-      "defaultValue": "Avro",
       "allowedValues": [
         "Avro"
       ],
@@ -144,7 +136,6 @@
     },
     "captureTime": {
       "type": "int",
-      "defaultValue": 300,
       "minValue": 60,
       "maxValue": 900,
       "metadata": {
@@ -153,7 +144,6 @@
     },
     "captureSize": {
       "type": "int",
-      "defaultValue": 10485760,
       "minValue": 10485760,
       "maxValue": 524288000,
       "metadata": {
@@ -174,8 +164,7 @@
       ],
       "metadata": {
         "description": "Size of vm"
-      },
-      "defaultValue": "Standard_D1_v2"
+      }
     },
     "vm_username": {
       "type": "string",
