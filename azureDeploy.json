@@ -543,7 +543,7 @@
   "outputs": {
     "websiteUrl": {
       "type": "string",
-      "value": "[reference('azureFunction').outputs.websiteUrl.value]"
+      "value": "[Concat(reference('azureFunction').outputs.websiteUrl.value,'/api/quickstart_wizard')]"
     }
   }
 }
