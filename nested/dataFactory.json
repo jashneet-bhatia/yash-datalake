@@ -179,7 +179,6 @@
           }
         },
         {
-          
           "type": "pipelines",
           "name": "[variables('pipeline_name_1')]",
           "dependsOn": [
