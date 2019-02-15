@@ -12,8 +12,7 @@
       "type": "string",
       "metadata": {
         "description": "Location for all resources."
-      },
-      "defaultValue": "[resourceGroup().location]"
+      }
     },
     "vmSize": {
       "type": "string",
