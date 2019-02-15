@@ -2,6 +2,27 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "adlAnalyticsName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Data Lake Analytics account to create."
+      },
+      "defaultValue": "datalakedemoadla"
+    },
+    "adlStoreName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Data Lake Store account to create."
+      },
+      "defaultValue": "datalakedemoadlstore"
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "The location in which the resources will be created."
+      },
+      "defaultValue": "[resourceGroup().location]"
+    },
     "OptionalWizardInstall": {
       "type": "string",
       "allowedValues": [
@@ -40,27 +61,6 @@
       "type": "string",
       "metadata": {
         "description": "The access key of the service principal that has permissions to create HDInsight clusters in your subscription."
-      }
-    },
-    "adlAnalyticsName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the Data Lake Analytics account to create."
-      },
-      "defaultValue": "datalakedemoadla"
-    },
-    "adlStoreName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the Data Lake Store account to create."
-      },
-      "defaultValue": "datalakedemoadlstore"
-    },
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "The location in which the resources will be created."
       }
     },
     "eventHubNamespaceName": {
@@ -188,31 +188,7 @@
       "metadata": {
         "description": "Password for the Virtual Machine."
       }
-    },
-    "hostnamebinding": {
-      "defaultValue": "demotriggerappESFunction1234.azurewebsites.net",
-      "type": "String"
     }
-  },
-  "variables": {
-    "storageAccountName": "[toLower(uniqueString(resourceGroup().id, 'storage'))]",
-    "blobContainer": "raw",
-    "storageAccountType": "Standard_LRS",
-    "maximumThroughputUnits": 8,
-    "DataCleaningInputStream": "datalakerawstream",
-    "DataCleaningOutputStream": "datalakecleanstream",
-    "captureNameFormat": "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
-    "DataCleaningStreamAnalyticsJob": "cleanOrdersStreamAnalyticsJob",
-    "DataAggregatorStreamAnalyticsJob1": "sellingProductPerMinJob",
-    "DataAggregatorStreamAnalyticsJob2": "geoLocationsJob",
-    "DataAggregatorStreamAnalyticsJob3": "ageGroupWiseRevenueJob",
-    "appName": "azuredatalakeuiapp",
-    "dnsLabelPrefix": "[concat('datalake',uniquestring(resourceGroup().id,deployment().name))]",
-    "ES_Function_name": "demotriggerappESFunction1234",
-    "serverfarms_EastUS2Plan_name": "EastUS2Plan",
-    "config_web_name_4": "web",
-    "_artifactsLocation": "https://raw.githubusercontent.com/ajos1993/yash-datalake/master/",
-    "_artifactsLocationSasToken": ""
   },
   "resources": [
     {
@@ -239,9 +215,6 @@
       "type": "Microsoft.Resources/deployments",
       "name": "dataFactory",
       "apiVersion": "2018-02-01",
-      "dependsOn": [
-        "KibanaESDeployedVM"
-      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -274,7 +247,10 @@
             "value": "[parameters('servicePrincipalKey')]"
           }
         }
-      }
+      },
+      "dependsOn": [
+        "KibanaESDeployedVM"
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
@@ -560,6 +536,26 @@
       }
     }
   ],
+  "variables": {
+    "storageAccountName": "[toLower(uniqueString(resourceGroup().id, 'storage'))]",
+    "blobContainer": "raw",
+    "storageAccountType": "Standard_LRS",
+    "maximumThroughputUnits": 8,
+    "DataCleaningInputStream": "datalakerawstream",
+    "DataCleaningOutputStream": "datalakecleanstream",
+    "captureNameFormat": "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
+    "DataCleaningStreamAnalyticsJob": "cleanOrdersStreamAnalyticsJob",
+    "DataAggregatorStreamAnalyticsJob1": "sellingProductPerMinJob",
+    "DataAggregatorStreamAnalyticsJob2": "geoLocationsJob",
+    "DataAggregatorStreamAnalyticsJob3": "ageGroupWiseRevenueJob",
+    "appName": "azuredatalakeuiapp",
+    "dnsLabelPrefix": "[concat('datalake',uniquestring(resourceGroup().id,deployment().name))]",
+    "ES_Function_name": "demotriggerappESFunction1234",
+    "serverfarms_EastUS2Plan_name": "EastUS2Plan",
+    "config_web_name_4": "web",
+    "_artifactsLocation": "https://raw.githubusercontent.com/ajos1993/yash-datalake/master/",
+    "_artifactsLocationSasToken": ""
+  },
   "outputs": {
     "websiteUrl": {
       "type": "string",
