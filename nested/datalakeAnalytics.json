@@ -65,6 +65,5 @@
         "[concat('Microsoft.DataLakeStore/accounts/', parameters('adlStoreName'))]"
       ]
     }
-  ],
-  "outputs": {}
+  ]
 }
