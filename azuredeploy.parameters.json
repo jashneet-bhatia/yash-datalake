@@ -3,40 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "dataFactoryLocation": {
-      "value": ""
-    },
-    "eventhubSku": {
-      "value": "Standard"
-    },
-    "skuCapacity": {
-      "value": 1
-    },
-    "isAutoInflateEnabled": {
-      "value": "True"
-    },
-    "maximumThroughputUnits": {
-      "value": 2
-    },
-    "messageRetentionInDays": {
-      "value": 1
-    },
-    "partitionCount": {
-      "value": 2
-    },
-    "captureEncodingFormat": {
-      "value": "true"
-    },
-    "captureEnabled": {
-      "value": "true"
-    },
-    "captureNameFormat": {
-      "value": "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}"
+      "value": "East US 2"
     },
     "adlAnalyticsName": {
-      "value": ""
+      "value": "datalakedemoadla"
     },
     "adlStoreName": {
-      "value": ""
+      "value": "datalakedemoadla"
     },
     "captureTime": {
       "value": 300
