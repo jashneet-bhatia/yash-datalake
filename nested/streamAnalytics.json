@@ -362,7 +362,7 @@
                   "storageAccounts": [
                     {
                       "accountName": "[parameters('StorageAccountName')]",
-                      "accountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
+                      "accountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName')))]"
                     }
                   ],
                   "container": "raw",
