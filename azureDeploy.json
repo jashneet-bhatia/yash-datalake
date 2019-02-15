@@ -2,6 +2,16 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "dataFactoryLocation": {
+      "type": "string",
+      "allowedValues": [
+        "East US 2",
+        "East US"
+      ],
+      "metadata": {
+        "description": "Location of the data factory. Currently, only East US and East US 2 are supported. "
+      }
+    },
     "adlAnalyticsName": {
       "type": "string",
       "metadata": {
@@ -14,128 +24,9 @@
         "description": "The name of the Data Lake Store account to create."
       }
     },
-    "location": {
-      "type": "string",
-      "metadata": {
-        "description": "The location in which the resources will be created."
-      },
-      "defaultValue": "[resourceGroup().location]"
-    },
-    "OptionalWizardInstall": {
-      "type": "string",
-      "allowedValues": [
-        "Yes",
-        "No"
-      ],
-      "defaultValue": "Yes",
-      "metadata": {
-        "description": "Select whether the VM should be in production or not."
-      }
-    },
-    "dataFactoryName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the data factory. Must be globally unique."
-      },
-      "defaultValue": "[toLower(uniqueString(resourceGroup().id, 'datafactory'))]"
-    },
-    "dataFactoryLocation": {
-      "type": "string",
-      "allowedValues": [
-        "East US 2",
-        "East US"
-      ],
-      "metadata": {
-        "description": "Location of the data factory. Currently, only East US and East US 2 are supported. "
-      }
-    },
-    "servicePrincipalId": {
-      "type": "string",
-      "metadata": {
-        "description": "The ID of the service principal that has permissions to create HDInsight clusters in your subscription."
-      }
-    },
-    "servicePrincipalKey": {
-      "type": "string",
-      "metadata": {
-        "description": "The access key of the service principal that has permissions to create HDInsight clusters in your subscription."
-      }
-    },
-    "eventHubNamespaceName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the EventHub namespace"
-      },
-      "defaultValue": "[toLower(uniqueString(resourceGroup().id, 'eventhubs'))]"
-    },
-    "eventhubSku": {
-      "type": "string",
-      "allowedValues": [
-        "Basic",
-        "Standard"
-      ],
-      "metadata": {
-        "description": "The messaging tier for service Bus namespace"
-      }
-    },
-    "skuCapacity": {
-      "type": "int",
-      "allowedValues": [
-        1,
-        2,
-        4
-      ],
-      "metadata": {
-        "description": "MessagingUnits for premium namespace"
-      }
-    },
-    "isAutoInflateEnabled": {
-      "type": "string",
-      "allowedValues": [
-        "True",
-        "False"
-      ],
-      "metadata": {
-        "description": "Enable or disable AutoInflate"
-      }
-    },
-    "messageRetentionInDays": {
-      "type": "int",
-      "minValue": 1,
-      "maxValue": 7,
-      "metadata": {
-        "description": "How long to retain the data in Event Hub"
-      }
-    },
-    "partitionCount": {
-      "type": "int",
-      "minValue": 2,
-      "maxValue": 32,
-      "metadata": {
-        "description": "Number of partitions chosen"
-      }
-    },
-    "captureEnabled": {
-      "type": "string",
-      "allowedValues": [
-        "false",
-        "true"
-      ],
-      "metadata": {
-        "description": "Enable or disable the Capture feature for your Event Hub"
-      }
-    },
-    "captureEncodingFormat": {
-      "type": "string",
-      "allowedValues": [
-        "Avro"
-      ],
-      "metadata": {
-        "description": "The encoding format Eventhub capture serializes the EventData when archiving to your storage"
-      }
-    },
     "captureTime": {
       "type": "int",
+      "defaultValue": 300,
       "minValue": 60,
       "maxValue": 900,
       "metadata": {
@@ -144,6 +35,7 @@
     },
     "captureSize": {
       "type": "int",
+      "defaultValue": 10485760,
       "minValue": 10485760,
       "maxValue": 524288000,
       "metadata": {
@@ -176,6 +68,123 @@
       "type": "securestring",
       "metadata": {
         "description": "Password for the Virtual Machine."
+      }
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "The location in which the resources will be created."
+      },
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "OptionalWizardInstall": {
+      "type": "string",
+      "allowedValues": [
+        "Yes",
+        "No"
+      ],
+      "defaultValue": "Yes",
+      "metadata": {
+        "description": "Select whether the VM should be in production or not."
+      }
+    },
+    "dataFactoryName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the data factory. Must be globally unique."
+      },
+      "defaultValue": "[toLower(uniqueString(resourceGroup().id, 'datafactory'))]"
+    },
+    "servicePrincipalId": {
+      "type": "string",
+      "metadata": {
+        "description": "The ID of the service principal that has permissions to create HDInsight clusters in your subscription."
+      }
+    },
+    "servicePrincipalKey": {
+      "type": "string",
+      "metadata": {
+        "description": "The access key of the service principal that has permissions to create HDInsight clusters in your subscription."
+      }
+    },
+    "eventHubNamespaceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the EventHub namespace"
+      },
+      "defaultValue": "[toLower(uniqueString(resourceGroup().id, 'eventhubs'))]"
+    },
+    "eventhubSku": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "allowedValues": [
+        "Basic",
+        "Standard"
+      ],
+      "metadata": {
+        "description": "The messaging tier for service Bus namespace"
+      }
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "allowedValues": [
+        1,
+        2,
+        4
+      ],
+      "metadata": {
+        "description": "MessagingUnits for premium namespace"
+      }
+    },
+    "isAutoInflateEnabled": {
+      "type": "string",
+      "defaultValue": "True",
+      "allowedValues": [
+        "True",
+        "False"
+      ],
+      "metadata": {
+        "description": "Enable or disable AutoInflate"
+      }
+    },
+    "messageRetentionInDays": {
+      "type": "int",
+      "minValue": 1,
+      "defaultValue": 1,
+      "maxValue": 7,
+      "metadata": {
+        "description": "How long to retain the data in Event Hub"
+      }
+    },
+    "partitionCount": {
+      "type": "int",
+      "minValue": 2,
+      "maxValue": 32,
+      "defaultValue": 2,
+      "metadata": {
+        "description": "Number of partitions chosen"
+      }
+    },
+    "captureEnabled": {
+      "type": "string",
+      "defaultValue": "true",
+      "allowedValues": [
+        "false",
+        "true"
+      ],
+      "metadata": {
+        "description": "Enable or disable the Capture feature for your Event Hub"
+      }
+    },
+    "captureEncodingFormat": {
+      "type": "string",
+      "defaultValue": "Avro",
+      "allowedValues": [
+        "Avro"
+      ],
+      "metadata": {
+        "description": "The encoding format Eventhub capture serializes the EventData when archiving to your storage"
       }
     }
   },
