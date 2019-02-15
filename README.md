@@ -1,12 +1,14 @@
 # Datalake on Azure
+	
 --------------------------------------------------------------------------
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fajos1993%2FYASH-Azure-DataLake-Quickstart%2Fmaster%2FazureDeploy.json" target="_blank">
 <img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/>
 </a>
-<br />
+	
 --------------------------------------------------------------------------
-<br />
 # Overview :
+<br/>
+	
 --------------------------------------------------------------------------
 The aim of the Yash Azure quickstart solution is to showcase the capabilities of serverless Data Lake in the Azure Cloud. 
 - Yash Data Lake in Azure Cloud showcases features such as
