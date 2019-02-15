@@ -57,17 +57,11 @@
       }
     }
   },
-  "variables": {
-    "numberOfStreamingUnits": 3,
-    "DataAggregatorOutputContainerName": "publish",
-    "location": "[resourceGroup().location]"
-  },
   "resources": [
     {
       "type": "Microsoft.StreamAnalytics/StreamingJobs",
       "name": "[parameters('DataCleaningStreamAnalyticsJob')]",
       "apiVersion": "2016-03-01",
-      "location": "[variables('location')]",
       "properties": {
         "sku": {
           "name": "standard"
@@ -132,7 +126,8 @@
             }
           }
         ]
-      }
+      },
+      "location": "[variables('location')]"
     },
     {
       "type": "Microsoft.StreamAnalytics/StreamingJobs",
@@ -462,5 +457,10 @@
         ]
       }
     }
-  ]
+  ],
+  "variables": {
+    "numberOfStreamingUnits": 3,
+    "DataAggregatorOutputContainerName": "publish",
+    "location": "[resourceGroup().location]"
+  }
 }
