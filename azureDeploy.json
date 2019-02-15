@@ -2,6 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "eventHubNamespaceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the EventHub namespace"
+      },
+      "defaultValue": "[toLower(uniqueString(resourceGroup().id, 'eventhubs'))]"
+    },
     "dataFactoryLocation": {
       "type": "string",
       "allowedValues": [
@@ -107,13 +114,6 @@
         "description": "The access key of the service principal that has permissions to create HDInsight clusters in your subscription."
       }
     },
-    "eventHubNamespaceName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the EventHub namespace"
-      },
-      "defaultValue": "[toLower(uniqueString(resourceGroup().id, 'eventhubs'))]"
-    },
     "eventhubSku": {
       "type": "string",
       "defaultValue": "Standard",
@@ -164,17 +164,6 @@
       "defaultValue": 2,
       "metadata": {
         "description": "Number of partitions chosen"
-      }
-    },
-    "captureEnabled": {
-      "type": "string",
-      "defaultValue": "true",
-      "allowedValues": [
-        "false",
-        "true"
-      ],
-      "metadata": {
-        "description": "Enable or disable the Capture feature for your Event Hub"
       }
     },
     "captureEncodingFormat": {
@@ -254,9 +243,6 @@
       "type": "Microsoft.Resources/deployments",
       "name": "dataLakeAnalytics",
       "apiVersion": "2018-02-01",
-      "dependsOn": [
-        "storageAccount"
-      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -280,15 +266,15 @@
             "value": "[reference('storageAccount').outputs.accessKey.value]"
           }
         }
-      }
+      },
+      "dependsOn": [
+        "storageAccount"
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "name": "EventHubTemplate",
       "apiVersion": "2018-02-01",
-      "dependsOn": [
-        "dataLakeAnalytics"
-      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -323,9 +309,6 @@
           "partitionCount": {
             "value": "[parameters('partitionCount')]"
           },
-          "captureEnabled": {
-            "value": "[parameters('captureEnabled')]"
-          },
           "captureEncodingFormat": {
             "value": "[parameters('captureEncodingFormat')]"
           },
@@ -342,7 +325,10 @@
             "value": "[variables('captureNameFormat')]"
           }
         }
-      }
+      },
+      "dependsOn": [
+        "dataLakeAnalytics"
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
