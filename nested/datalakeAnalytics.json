@@ -33,28 +33,18 @@
       }
     }
   },
-  "variables": {
-    "adlsApiVersion": "2016-11-01",
-    "adlaApiVersion": "2016-11-01"
-  },
   "resources": [
     {
       "type": "Microsoft.DataLakeStore/accounts",
       "name": "[parameters('adlStoreName')]",
       "apiVersion": "2016-11-01",
-      "location": "[parameters('location')]",
-      "dependsOn": [],
-      "tags": {}
+      "location": "[parameters('location')]"
     },
     {
-      "name": "[parameters('adlAnalyticsName')]",
       "type": "Microsoft.DataLakeAnalytics/accounts",
-      "location": "[parameters('location')]",
+      "name": "[parameters('adlAnalyticsName')]",
       "apiVersion": "2016-11-01",
-      "dependsOn": [
-        "[concat('Microsoft.DataLakeStore/accounts/', parameters('adlStoreName'))]"
-      ],
-      "tags": {},
+      "location": "[parameters('location')]",
       "properties": {
         "defaultDataLakeStoreAccount": "[parameters('adlStoreName')]",
         "dataLakeStoreAccounts": [
@@ -70,7 +60,10 @@
             }
           }
         ]
-      }
+      },
+      "dependsOn": [
+        "[concat('Microsoft.DataLakeStore/accounts/', parameters('adlStoreName'))]"
+      ]
     }
   ],
   "outputs": {}
