@@ -8,8 +8,7 @@
 --------------------------------------------------------------------------
 # Overview :
 <br/>
-	
---------------------------------------------------------------------------
+
 The aim of the Yash Azure quickstart solution is to showcase the capabilities of serverless Data Lake in the Azure Cloud. 
 - Yash Data Lake in Azure Cloud showcases features such as
 	* Data Ingestion
