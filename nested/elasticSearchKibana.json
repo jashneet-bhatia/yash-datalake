@@ -30,17 +30,17 @@
                 "description": "Size of vm"
             }
         },
-		"_artifactsLocation": {
-			  "type": "string",
-			  "metadata": {
-				  "description": "The base URI where artifacts required by this template are located including a trailing '/'"
-			  }
-		  },	  
-		"_artifactsLocationSasToken": {
-			  "type": "securestring",
-			  "metadata": {
-				  "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
-			  },
+	"_artifactsLocation": {
+		 "type": "string",
+		  "metadata": {
+			  "description": "The base URI where artifacts required by this template are located including a trailing '/'"
+		  }
+	  },	  
+	"_artifactsLocationSasToken": {
+		  "type": "securestring",
+		  "metadata": {
+			  "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
+		  },
           "defaultValue": ""
       },
         "username": {
@@ -63,8 +63,6 @@
         }
     },
     "variables": {
-        "_artifactsLocation": "https://raw.githubusercontent.com/ajos1993/yash-datalake/master/",
-        "_artifactsLocationSasToken": "",
         "networkSecurityGroupName": "customdatalakeSecurrityGroup",
         "extensionName": "CustomScript",
         "scenarioPrefix": "customscriptLinux",
@@ -347,7 +345,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "[uri(variables('_artifactsLocation'),concat(variables('scriptFolder'),'/',variables('scriptFilename'), variables('_artifactsLocationSasToken')))]"
+                        "[uri(parameters('_artifactsLocation'),concat(variables('scriptFolder'),'/',variables('scriptFilename'), parameters('_artifactsLocationSasToken')))]"
                     ],
                     "commandToExecute": "[concat('sh ', variables('scriptFilename'),' >> ','/home/testingDataFileLog.txt')]"
                 }
