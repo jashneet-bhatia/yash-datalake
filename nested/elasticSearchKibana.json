@@ -30,12 +30,6 @@
                 "description": "Size of vm"
             }
         },
-        "username": {
-            "type": "String",
-            "metadata": {
-                "description": "Username for the Virtual Machine."
-            }
-        },
 		"_artifactsLocation": {
 			  "type": "string",
 			  "metadata": {
@@ -46,8 +40,15 @@
 			  "type": "securestring",
 			  "metadata": {
 				  "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
-			  }
-		  },
+			  },
+          "defaultValue": ""
+      },
+        "username": {
+            "type": "String",
+            "metadata": {
+                "description": "Username for the Virtual Machine."
+            }
+        },
         "password": {
             "type": "SecureString",
             "metadata": {
@@ -62,6 +63,8 @@
         }
     },
     "variables": {
+        "_artifactsLocation": "https://raw.githubusercontent.com/ajos1993/yash-datalake/master/",
+        "_artifactsLocationSasToken": "",
         "networkSecurityGroupName": "customdatalakeSecurrityGroup",
         "extensionName": "CustomScript",
         "scenarioPrefix": "customscriptLinux",
@@ -121,10 +124,6 @@
             "name": "[variables('nicName')]",
             "apiVersion": "2018-11-01",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-            ],
             "properties": {
                 "ipConfigurations": [
                     {
@@ -143,7 +142,11 @@
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
                 }
-            }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+            ]
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
@@ -167,7 +170,7 @@
                         "version": "latest"
                     },
                     "osDisk": {
-                        "name": "osdisk009",
+                        "name": "osdisk1",
                         "createOption": "FromImage",
                         "managedDisk": {
                             "storageAccountType": "Standard_LRS"
@@ -337,9 +340,6 @@
             "name": "[concat(variables('vmName'),'/', variables('extensionName'))]",
             "apiVersion": "2018-10-01",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-            ],
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
                 "type": "CustomScript",
@@ -347,11 +347,14 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "[uri(parameters('_artifactsLocation'),concat(variables('scriptFolder'),'/',variables('scriptFilename')))]"
+                        "[uri(variables('_artifactsLocation'),concat(variables('scriptFolder'),'/',variables('scriptFilename'), variables('_artifactsLocationSasToken')))]"
                     ],
                     "commandToExecute": "[concat('sh ', variables('scriptFilename'),' >> ','/home/testingDataFileLog.txt')]"
                 }
-            }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+            ]
         }
     ],
     "outputs": {
