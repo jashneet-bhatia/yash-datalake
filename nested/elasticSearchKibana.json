@@ -167,7 +167,7 @@
                         "version": "latest"
                     },
                     "osDisk": {
-                        "name": "osdisk1",
+                        "name": "osdisk009",
                         "createOption": "FromImage",
                         "managedDisk": {
                             "storageAccountType": "Standard_LRS"
@@ -347,7 +347,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "[uri(parameters('_artifactsLocation'),concat(variables('scriptFolder'),'/',variables('scriptFilename'), parameters('_artifactsLocationSasToken')))]"
+                        "[uri(parameters('_artifactsLocation'),concat(variables('scriptFolder'),'/',variables('scriptFilename')))]"
                     ],
                     "commandToExecute": "[concat('sh ', variables('scriptFilename'),' >> ','/home/testingDataFileLog.txt')]"
                 }
