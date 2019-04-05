@@ -8,6 +8,19 @@
         "description": "Deployment location"
       }
     },
+	"_artifactsLocation": {
+          "type": "string",
+          "metadata": {
+              "description": "The base URI where artifacts required by this template are located including a trailing '/'"
+          }
+      },	  
+    "_artifactsLocationSasToken": {
+          "type": "securestring",
+          "metadata": {
+              "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
+          },
+          "defaultValue": ""
+      },
     "KibanaESDeployedVMIP": {
       "type": "string",
       "metadata": {
@@ -100,8 +113,6 @@
     }
   },
   "variables": {
-    "_artifactsLocation": "https://github.com/ajos1993/yash-datalake/raw/master/",
-    "_artifactsLocationSasToken": "",
     "config_web_name": "web",
     "pythonExtension": "azureappservice-python2714x64",
     "functionAppName": "[parameters('appName')]",
@@ -257,7 +268,7 @@
             "displayName": "pythonextension"
           },
           "properties": {
-            "packageUri": "[uri(variables('_artifactsLocation'),concat('scripts/quickstart_function_app.zip', variables('_artifactsLocationSasToken')))]",
+            "packageUri": "[uri(parameters('_artifactsLocation'),concat('scripts/quickstart_function_app.zip', parameters('_artifactsLocationSasToken')))]",
             "dbType": "None",
             "connectionString": ""
           }
