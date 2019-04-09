@@ -345,7 +345,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "[uri(parameters('_artifactsLocation'),concat(variables('scriptFolder'),'/',variables('scriptFilename'), parameters('_artifactsLocationSasToken')))]"
+                        "[uri(parameters('_artifactsLocation'),concat(variables('scriptFolder'),'/',parameters('scriptFilename'), parameters('_artifactsLocationSasToken')))]"
                     ],
                     "commandToExecute": "[concat('sh ', variables('scriptFilename'),' >> ','/home/testingDataFileLog.txt')]"
                 }
