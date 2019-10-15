@@ -13,13 +13,13 @@
       "metadata": {
         "description": "Name of the data factory. Must be globally unique."
       }
-    },
-	"_artifactsLocation": {
+     },
+     "_artifactsLocation": {
           "type": "string",
           "metadata": {
               "description": "The base URI where artifacts required by this template are located including a trailing '/'"
           }
-      },	  
+      },	
     "dataFactoryLocation": {
       "type": "string",
       "metadata": {
