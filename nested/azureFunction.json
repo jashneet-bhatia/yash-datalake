@@ -27,7 +27,7 @@
       }
     },
     "web_app_secret": {
-      "type": "string",
+      "type": "secureString",
       "metadata": {
         "description": "The ID of the service principal web/api"
       }
